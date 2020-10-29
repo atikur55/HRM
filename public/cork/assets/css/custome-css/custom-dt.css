@@ -1,0 +1,49 @@
+
+ .table-view {
+    color: #888ea8;
+    margin-right: 6px;
+    vertical-align: middle;
+    fill: rgba(0, 23, 55, 0.08);
+    cursor: pointer;
+  }
+  
+  .table-view:hover {
+    color: #6ae751;
+  }
+  
+  .table-edit {
+    color: #888ea8;
+    margin-right: 6px;
+    vertical-align: middle;
+    fill: rgba(0, 23, 55, 0.08);
+    cursor: pointer;
+  }
+  
+ .table-edit:hover {
+    color: #7951e7;
+  }
+  
+  .table-delete {
+    color: #888ea8;
+    margin-right: 6px;
+    vertical-align: middle;
+    fill: rgba(0, 23, 55, 0.08);
+    cursor: pointer;
+  }
+  
+.table-delete:hover {
+    color: #e75151;
+  }
+  
+  .table-archieve {
+    color: #888ea8;
+    margin-right: 6px;
+    vertical-align: middle;
+    fill: rgba(0, 23, 55, 0.08);
+    cursor: pointer;
+  }
+  
+ .table-archieve:hover {
+    color: #dde751;
+  }
+  
