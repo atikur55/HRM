@@ -3,6 +3,24 @@
     @section('content')
     
     <div class="container-fluid">
+     
+            @php 
+            $data = array();
+
+// $data =  var_export(unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR'])));
+
+$data = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+
+// echo $data['geoplugin_request'].' '.$data['geoplugin_city'];
+$ip = $data['geoplugin_request'];
+$city = $data['geoplugin_city'];
+$countryCode = $data['geoplugin_countryCode'];
+$regionName = $data['geoplugin_regionName'];
+// die();
+@endphp
+
+
+
         <div class="fixedcenter">
             <div class="clockwrapper">
                 <div class="clockinout">
@@ -15,6 +33,25 @@
                     <span id="show_day" class="clock-text"></span>
                     <span id="show_time" class="clock-time"></span>
                     <span id="show_date" class="clock-day"></span>
+
+                    <div style="color:white;margin-top:5px" >
+                       
+                                <p>
+                                    IP Address: {{$ip}} <br>
+                           
+                                    city: {{$city}} <br>
+                               
+                                    countryCode: {{$countryCode}}
+                                </p>
+                                {{-- <p>
+                                    regionName: {{$regionName}}
+                                </p> --}}
+                    
+                    
+                    </div>
+
+
+
                 </div>
             </div>
 
@@ -53,6 +90,9 @@
             </div>
         </div>
 
+    
+   
+
     </div>
 
     @endsection
@@ -67,7 +107,7 @@
     // time function to prevent the 1s delay
     var setTime = function() {
         // initialize clock with timezone
-        var time = moment().tz('Asia/Dhaka');
+        var time = moment().tz('Africa/Johannesburg');
        
 
         // set time in html

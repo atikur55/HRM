@@ -34,9 +34,21 @@ class UsersController extends Controller
     public function register(Request $request)
     {
         if (permission::permitted('users-add')=='fail'){ return redirect()->route('denied'); }
+        // dd($request);die();
+        // echo '<br>----<br>';
+        // echo '<pre>';
+        // print_r($request);
+        // echo '</pre>';
+        // echo '<br>----<br>';
+
+        $n = explode('-',$request->name);
+        $name = $n[0];
+        $ref = $n[2];
+        // echo $name.' '.$ref;
+        // die();
 
         $v = $request->validate([
-            'ref' => 'required|max:100',
+            //'ref' => 'required|max:100',
             'name' => 'required|max:100',
             'email' => 'required|email|max:100',
             'role_id' => 'required|digits_between:1,99|max:2',
@@ -46,8 +58,8 @@ class UsersController extends Controller
             'status' => 'required|boolean|max:1',
         ]);
 
-        $ref = $request->ref;
-        $name = $request->name;
+        // $ref = $ref;
+        // $name = $name;
     	$email = $request->email;
 		$role_id = $request->role_id;
 		$acc_type = $request->acc_type;
@@ -98,6 +110,7 @@ class UsersController extends Controller
 
     public function update(Request $request) 
     {
+        // dd($request);die();
         if (permission::permitted('users-edit')=='fail'){ return redirect()->route('denied'); }
 
         $v = $request->validate([
@@ -107,39 +120,73 @@ class UsersController extends Controller
             'status' => 'required|boolean|max:1',
         ]);
 
-        $ref = Crypt::decryptString($request->ref);
+    
 		$role_id = $request->role_id;
 		$acc_type = $request->acc_type;
         $password = $request->password;
         $password_confirmation = $request->password_confirmation;
         $status = $request->status;
-
-        if ($password !== null && $password_confirmation !== null) 
-        {
-            $v = $request->validate([
-                'password' => 'required|min:8|max:100',
-                'password_confirmation' => 'required|min:8|max:100',
-            ]);
-
-            if ($password != $password_confirmation) 
+        // echo $request->ref;die();
+        if($request->ref!=0){ 
+            $ref = Crypt::decryptString($request->ref);
+            if ($password !== null && $password_confirmation !== null) 
             {
-                return redirect('users')->with('error', trans("Whoops! Password confirmation does not match!"));
+                $v = $request->validate([
+                    'password' => 'required|min:8|max:100',
+                    'password_confirmation' => 'required|min:8|max:100',
+                ]);
+    
+                if ($password != $password_confirmation) 
+                {
+                    return redirect('users')->with('error', trans("Whoops! Password confirmation does not match!"));
+                }
+    
+                table::users()->where('reference', $ref)->update([
+                    'role_id' => $role_id,
+                    'acc_type' => $acc_type,
+                    'status' => $status,
+                    'password' => Hash::make($password),
+                ]);
+            } else {
+                table::users()->where('reference', $ref)->update([
+                    'role_id' => $role_id,
+                    'acc_type' => $acc_type,
+                    'status' => $status,
+                ]);
             }
 
-            table::users()->where('reference', $ref)->update([
-                'role_id' => $role_id,
-                'acc_type' => $acc_type,
-                'status' => $status,
-                'password' => Hash::make($password),
-            ]);
-        } else {
-            table::users()->where('reference', $ref)->update([
-                'role_id' => $role_id,
-                'acc_type' => $acc_type,
-                'status' => $status,
-            ]);
-        }
+            /* check ref id null or not end */
+         }else{
 
+            $uid = $request->uid;
+            if ($password !== null && $password_confirmation !== null) 
+            {
+                $v = $request->validate([
+                    'password' => 'required|min:8|max:100',
+                    'password_confirmation' => 'required|min:8|max:100',
+                ]);
+    
+                if ($password != $password_confirmation) 
+                {
+                    return redirect('users')->with('error', trans("Whoops! Password confirmation does not match!"));
+                }
+    
+                table::users()->where('id', $uid)->update([
+                    'role_id' => $role_id,
+                    'acc_type' => $acc_type,
+                    'status' => $status,
+                    'password' => Hash::make($password),
+                ]);
+            } else {
+                table::users()->where('id', $uid)->update([
+                    'role_id' => $role_id,
+                    'acc_type' => $acc_type,
+                    'status' => $status,
+                ]);
+            }
+            /* else ref id null or not */
+         }
+     
     	return redirect('users')->with('success', trans("User Account has been updated!"));       
     }
 
@@ -150,5 +197,22 @@ class UsersController extends Controller
     	table::users()->where('id', $id)->delete();
     	
         return redirect('users')->with('success', trans("User Account has been deleted!"));
+    }
+
+    public function enable($id, Request $request)
+    {
+        if (permission::permitted('users-delete')=='fail'){ return redirect()->route('denied'); }
+
+    	table::users()->where('id', $id)->update(['status'=>1]);
+    	
+        return redirect('users')->with('success', trans("User Account has been Enabled!"));
+    }
+    public function disable($id, Request $request)
+    {
+        if (permission::permitted('users-delete')=='fail'){ return redirect()->route('denied'); }
+
+    	table::users()->where('id', $id)->update(['status'=>0]);
+    	
+        return redirect('users')->with('success', trans("User Account has been Disabled!"));
     }
 }

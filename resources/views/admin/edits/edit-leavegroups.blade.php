@@ -14,7 +14,7 @@
             </div>    
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-content">
@@ -29,19 +29,19 @@
                     </ul>
                 </div>
                 @endif
-                <form id="edit_leavegroup_form" action="{{ url('fields/leavetype/leave-groups/update') }}" class="ui form" method="post" accept-charset="utf-8">
+                <form id="edit_leavegroup_form" action="{{ url('form-groups/leavetype/leave-groups/update') }}" class="ui form" method="post" accept-charset="utf-8">
                 @csrf
-                    <div class="field">
+                    <div class="form-group">
                         <label>{{ __("Leave Group Name") }}</label>
-                        <input type="text" name="leavegroup" value="@isset($lg){{$lg->leavegroup}}@endisset" class="uppercase" placeholder="Enter Leave Group Name">
+                        <input type="text" name="leavegroup" value="@isset($lg){{$lg->leavegroup}}@endisset" class="form-control uppercase" placeholder="Enter Leave Group Name">
                     </div>
-                    <div class="field">
+                    <div class="form-group">
                         <label>{{ __("Description") }}</label>
-                        <input type="text" name="description" value="@isset($lg){{$lg->description}}@endisset" class="uppercase" placeholder="Enter Description for Leave Group">
+                        <input type="text" name="description" value="@isset($lg){{$lg->description}}@endisset" class="form-control uppercase" placeholder="Enter Description for Leave Group">
                     </div>
-                    <div class="field">
+                    <div class="form-group">
                         <label>{{ __("Leave Privileges") }}</label>
-                        <select class="ui search dropdown selection multiple leaves uppercase" name="leaveprivileges[]" multiple="">
+                        <select class="form-control ui search dropdown selection multiple leaves uppercase" name="leaveprivileges[]" multiple="">
                             <option value="">Select Leave Privileges</option>
                             @isset($lt) 
                                 @foreach($lt as $leave) 
@@ -50,15 +50,15 @@
                             @endisset
                         </select>
                     </div>
-                    <div class="field">
+                    <div class="form-group">
                         <label>{{ __("Status") }}</label>
-                        <select class="ui dropdown uppercase" name="status">
+                        <select class="form-control ui dropdown uppercase" name="status">
                             <option value="">Select Status</option>
                             <option value="1" @isset($lg) @if($lg->status == 1) selected @endif @endisset>Active</option>
                             <option value="0" @isset($lg) @if($lg->status == 0) selected @endif @endisset>Disabled</option>
                         </select>
                     </div>
-                    <div class="field">
+                    <div class="form-group">
                         <div class="ui error message">
                             <i class="close icon"></i>
                             <div class="header"></div>
@@ -70,8 +70,9 @@
                 </div>
                 <div class="box-footer">
                     <input type="hidden" name="id" value="@isset($e_id){{$e_id}}@endisset">
-                    <button class="ui positive approve small button" type="submit" name="submit"><i class="ui checkmark icon"></i> {{ __("Update") }}</button>
-                    <a href="{{ url('fields/leavetype/leave-groups') }}" class="ui black grey small button"><i class="ui times icon"></i> {{ __("Cancel") }}</a>
+                    <button class="btn btn-success ui positive approve small button" type="submit" name="submit"><i class="ui checkmark icon"></i> {{ __("Update") }}</button>
+
+                    <a href="{{ url('form-groups/leavetype/leave-groups') }}" class="btn btn-danger "><i class="ui times icon"></i> {{ __("Cancel") }}</a>
                 </div>
                 </form>
                 

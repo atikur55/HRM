@@ -63,6 +63,11 @@ Class permission {
             151 => 'leavegroup-add',
             152 => 'leavegroup-edit',
             153 => 'leavegroup-delete',
+        16=> 'clientgroups',
+            161 => 'client',
+            162 => 'clientedit',
+            163 => 'newclient',
+
     ];
 
     public static function permitted($page) 

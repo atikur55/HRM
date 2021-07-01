@@ -9,14 +9,15 @@
     
     <div class="container-fluid">
         <div class="row">
+            
+        <div class="col-md-12">
             <h2 class="page-title">{{ __("User Accounts Report") }}
-                <a href="{{ url('export/report/accounts') }}" class="ui basic button mini offsettop5 btn-export float-right"><i class="ui icon download"></i>{{ __("Export to CSV") }}</a>
-                <a href="{{ url('reports') }}" class="ui basic blue button mini offsettop5 float-right"><i class="ui icon chevron left"></i>{{ __("Return") }}</a>
+                <a style="margin-left:20px" href="{{ url('export/report/accounts') }}" class="btn btn-success ui basic button mini offsettop5 btn-export float-right"><i class="ui icon download"></i>{{ __("Export to CSV") }}</a>
+                <a href="{{ url('reports') }}" class="btn btn-danger ui basic blue button mini offsettop5 float-right"><i class="ui icon chevron left"></i>{{ __("Return") }}</a>
             </h2> 
-        </div>
+     
 
-        <div class="row">
-            <div class="box box-success">
+            <div class="col-md-8 box box-success widget-content widget-content-area br-6"> 
                 <div class="box-body">
                     <table width="100%" class="table table-striped table-hover" id="dataTables-example" data-order='[[ 0, "asc" ]]'>
                         <thead>

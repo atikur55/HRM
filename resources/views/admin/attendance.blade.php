@@ -18,28 +18,48 @@
 
     <div class="container-fluid">
         <div class="row">
-            <h2 class="page-title">{{ __('Attendances') }}
-                <a href="{{ url('clock') }}" target="_blank" class=" btn btn-primary ui positive button mini offsettop5 pull-right"><i class="ui icon clock"></i>{{ __('View web clock') }}</a>
-                <button class="btn btn-info ui primary button mini offsettop5 btn-add pull-right"><i class="ui icon plus circle"></i>{{ __("Manual entry") }}</button>
-            </h2>
-        </div>  
+            <div class="col-md-6">
+                <h2 class="page-title">{{ __('Attendances') }}      </h2>
+                &nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="col-md-6">
+                <a href="{{ url('clock') }}" target="_blank" class=" btn btn-primary ui positive button mini offsettop5 float-right" style="margin-right: 20px"><i class="ui icon clock"></i>{{ __('View web clock') }}</a> 
+                {{-- &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-info ui primary button mini offsettop5 btn-add float-right" style="margin-right: 20px"><i class="ui icon plus circle"></i>{{ __("Manual entry") }}</button> --}}
+            </div>
+        </div>
+        <br>
+      
 
-        <div class="row">
-            <div class="box box-success">
+       
+        <div class="row widget-content widget-content-area br-6">
+            <div class="col-md-12 box box-success">
                 <div class="box-body reportstable">
-                    <form action="{{ url('export/report/attendance') }}" method="post" accept-charset="utf-8" class="ui small form form-filter" id="filterform">
+                    <form action="{{url('attendance/filter')}}" {{-- action="{{ url('export/report/attendance') }}" method="post" --}} accept-charset="utf-8" class="ui small form form-filter" id="filterform">
                         {{ csrf_field() }}
+
+                     
+
                         <div class="inline three fields">
-                            <div class="form-group">
-                                <input id="datefrom" type="date" name="datefrom" value="" placeholder="Start Date" class="form-control">
-                                <i class="ui icon calendar alternate outline calendar-icon"></i>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input id="datefrom" type="date" name="datefrom" value="" placeholder="Start Date" class="form-control">
+                                        <i class="ui icon calendar alternate outline calendar-icon"></i>
+                                    </div>
+                                    &nbsp;
+                                </div>
                             </div>
-                            &nbsp;
+                         
+                            <div class="row">
+                                <div class="col-md-4">
                             <div class="two wide field">
                                 <input id="dateto" type="date" name="dateto" value="" placeholder="End Date" class="form-control">
                                 <i class="ui icon calendar alternate outline calendar-icon"></i>
                             </div>
                             &nbsp;
+                                </div>
+                            </div>
 
                             <input type="hidden" name="emp_id" value="">
                             <br>

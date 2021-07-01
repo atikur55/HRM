@@ -1,7 +1,7 @@
 @extends('layouts.default')
     
     @section('meta')
-        <title>Reports | Workday Time Clock</title>
+        <title>Reports | EIT HRM</title>
         <meta name="description" content="Workday reports, view reports, and export or download reports">
     @endsection
 
@@ -9,14 +9,17 @@
     
     <div class="container-fluid">
         <div class="row">
-            <h2 class="page-title">{{ __("Employee List Report") }}
-                <a href="{{ url('export/report/employees') }}" class="ui basic button mini offsettop5 btn-export float-right"><i class="ui icon download"></i>{{ __("Export to CSV") }}</a>
-                <a href="{{ url('reports') }}" class="ui basic blue button mini offsettop5 float-right"><i class="ui icon chevron left"></i>{{ __("Return") }}</a>
-            </h2>
-        </div>
+            
 
-        <div class="row">
-            <div class="box box-success">
+        <div class="col-md-12">
+            <h2 class="page-title">{{ __("Employee List Report") }}
+                <a href="{{ url('export/report/employees') }}" class="btn btn-success ui basic button mini offsettop5 btn-export float-right" style="margin-right:20px"><i class="ui icon download"></i>{{ __("Export to CSV") }}</a>
+            
+                <a style="margin-right:20px" href="{{ url('reports') }}" class="btn btn-danger ui basic blue button mini offsettop5 float-right"><i class="ui icon chevron left"></i>{{ __("Return") }}</a>
+            </h2>
+      
+           
+        <div class="row widget-content widget-content-area br-6">
                 <div class="box-body">
                     <table width="100%" class="table table-striped table-hover" id="dataTables-example" data-order='[[ 0, "asc" ]]'>
                         <thead>

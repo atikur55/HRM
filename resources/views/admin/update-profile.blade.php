@@ -14,7 +14,7 @@
             </div>    
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
             <div class="col-md-6">
                 <div class="box box-success">
                     <div class="box-content">
@@ -31,26 +31,26 @@
                         @endif
                         <form action="{{ url('user/update-profile') }}" class="ui form" method="post" accept-charset="utf-8">
                         @csrf
-                        <div class="field">
+                        <div class="form-group">
                             <label>{{ __("Name") }}</label>
-                            <input type="text" name="name" value="@isset($myuser->name){{ $myuser->name }}@endisset" class="uppercase">
+                            <input type="text" name="name" value="@isset($myuser->name){{ $myuser->name }}@endisset" class="form-control uppercase">
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <label for="">{{ __("Email") }}</label>
-                            <input type="email" name="email" value="@isset($myuser->email){{ $myuser->email }}@endisset" class="lowercase">
+                            <input type="email" name="email" value="@isset($myuser->email){{ $myuser->email }}@endisset" class="form-control lowercase">
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <label for="">{{ __("Role") }}</label>
-                        <input type="text" class="readonly uppercase" value="@isset($myrole){{ $myrole }}@endisset" readonly="" />
+                        <input type="text" class="form-control  readonly uppercase" value="@isset($myrole){{ $myrole }}@endisset" readonly="" />
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <label for="">{{ __("Status") }}</label>
-                            <input type="text" class="readonly uppercase" value="@isset($myuser->status)@if($myuser->status == 1)Enabled @else Disabled @endif @endisset" readonly="" />
+                            <input type="text" class="form-control  readonly uppercase" value="@isset($myuser->status)@if($myuser->status == 1)Enabled @else Disabled @endif @endisset" readonly="" />
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button class="ui positive button" type="submit" name="submit"><i class="ui checkmark icon"></i> {{ __("Update") }}</button>
-                        <a class="ui grey button" href="{{ url('dashboard') }}"><i class="ui times icon"></i> {{ __("Cancel") }}</a>
+                        <button class="btn btn-success ui positive button" type="submit" name="submit"><i class="ui checkmark icon"></i> {{ __("Update") }}</button>
+                        <a class="btn btn-danger ui grey button" href="{{ url('dashboard') }}"><i class="ui times icon"></i> {{ __("Cancel") }}</a>
                     </div>
                     </form>
                 </div>

@@ -1,35 +1,36 @@
 @extends('layouts.default')
 
     @section('meta')
-        <title>Profile | Workday Time Clock</title>
+        <title>Profile | HRM</title>
         <meta name="description" content="Workday view employee profile, edit employee profile, update employee profile">
     @endsection
 
     @section('content')
     
     <div class="container-fluid">
+        
         <div class="row">
             <div class="col-md-12">
                 <h2 class="page-title">{{ __('Employee Profile') }}
-                    <a href="{{ url('employees') }}" class="ui basic blue button mini offsettop5 float-right"><i class="ui icon chevron left"></i>{{ __('Return') }}</a>
+                    <a href="{{ url('employees') }}" class="btn btn-danger ui basic blue button mini offsettop5 float-right"><i class="ui icon chevron left"></i>{{ __('Return') }}</a>
                 </h2>
             </div>    
         </div>
-
-        <div class="row">
+        @include('partials.alert')
+        <div class="row widget-content widget-content-area br-6">
             <div class="col-md-4 float-left">
                 <div class="box box-success">
                     <div class="box-body employee-info">
                         <div class="author">
                         @if($i != null)
-                            <img class="avatar border-white" src="{{ asset('/assets/faces/'.$i) }}" alt="profile photo"/>
+                            <img class="avatar border-white" src="{{ asset('/assets/faces/'.$i) }}" alt="profile photo" height="100px" width="100px"/>
                         @else
                             <img class="avatar border-white" src="{{ asset('/assets/images/faces/default_user.jpg') }}" alt="profile photo"/>
                         @endif
                         </div>
                         <p class="description text-center">
                             <h4 class="title">@isset($p->firstname) {{ $p->firstname }} @endisset @isset($p->lastname) {{ $p->lastname }} @endisset</h4>
-                            <table style="width: 100%" class="profile-tbl">
+                            <table style="width: 100%" class="table">
                                 <tbody>
                                     <tr>
                                         <td>{{ __('Email') }}</td>
@@ -43,61 +44,114 @@
                                         <td>{{ __('ID no.') }}</td>
                                         <td><span class="p_value">@isset($c->idno) {{ $c->idno }} @endisset</span></td>
                                     </tr>
+                                    <tr>
+                                        <td>{{ __("Father Name") }}</td>
+                                        <td><span class="p_value">@isset($p->father) {{ $p->father }} @endisset</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __("Mother Name") }}</td>
+                                        <td><span class="p_value">@isset($p->mother) {{ $p->mother }} @endisset</span></td>
+                                    </tr>
+                              
+
+                                    @isset($p->emergency_contact)
+                                    @php
+                                      $exploded = array();
+                                    
+                                     $exploded = explode('_',$p->emergency_contact);
+                                 
+                                    
+                                    
+                                    @endphp
+                                    @endisset
+
+                                    
+                                    <tr>
+                                        <td>{{ __("Emergency Contact Person") }}</td>
+                                        <td><span class="p_value">@isset($exploded[0]) {{ $exploded[0] }} @endisset</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __("Relation with contact person") }}</td>
+                                        <td><span class="p_value">@isset($exploded[1]) {{ $exploded[1] }} @endisset</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __("Emergency Contact Number") }}</td>
+                                        <td><span class="p_value">@isset($exploded[2]) {{ $exploded[2] }} @endisset</span></td>
+                                    </tr>
+                                 
                                 </tbody>
                             </table>
                         </p>
+                       
+              
+                   
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-8 float-left">
-                <div class="box box-success">
-                    <div class="box-header with-border">{{ __('Personal Information') }}</div>
-                    <div class="box-body employee-info">
-                            <table class="tablelist">
+   
+                {{-- <div class="box box-success">
+                   
+                    <div class="box-body employee-info"> --}}
+                        <div class="col-md-4 float-left">
+                            {{-- <div class="content-header">
+                                <h2> {{ __('Personal Information') }} </h2>
+                            </div> --}}
+                                <table class="table widget-content ">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h4 class="ui dividing header">{{ __('Personal Information') }}</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('Civil Status') }}</p></td>
+                                            <td><p>@isset($p->civilstatus) {{ $p->civilstatus }} @endisset</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('Age') }}</p></td>
+                                            <td><p>@isset($p->age) {{ $p->age }} @endisset</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('Height') }} <span class="help">(cm)</span></p></td>
+                                            <td><p>@isset($p->height) {{ $p->height }} @endisset</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('Weight') }} <span class="help">(pounds)</span></p></td>
+                                            <td><p>@isset($p->weight) {{ $p->weight }} @endisset</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('Gender') }}</p></td>
+                                            <td><p>@isset($p->gender) {{ $p->gender }} @endisset</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('Date of Birth') }}</p></td>
+                                            <td>
+                                                <p>
+                                                    @isset($p->birthday) 
+                                                        @php echo e(date("F d, Y", strtotime($p->birthday))) @endphp
+                                                    @endisset
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('Place of Birth') }}</p></td>
+                                            <td><p>@isset($p->birthplace) {{ $p->birthplace }} @endisset</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('Home Address') }}</p></td>
+                                            <td><p>@isset($p->homeaddress) {{ $p->homeaddress }} @endisset</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>{{ __('National ID') }}</p></td>
+                                            <td><p>@isset($p->nationalid) {{ $p->nationalid }} @endisset</p></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="col-md-4 float-left">
+                            <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <td><p>{{ __('Civil Status') }}</p></td>
-                                        <td><p>@isset($p->civilstatus) {{ $p->civilstatus }} @endisset</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>{{ __('Age') }}</p></td>
-                                        <td><p>@isset($p->age) {{ $p->age }} @endisset</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>{{ __('Height') }} <span class="help">(cm)</span></p></td>
-                                        <td><p>@isset($p->height) {{ $p->height }} @endisset</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>{{ __('Weight') }} <span class="help">(pounds)</span></p></td>
-                                        <td><p>@isset($p->weight) {{ $p->weight }} @endisset</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>{{ __('Gender') }}</p></td>
-                                        <td><p>@isset($p->gender) {{ $p->gender }} @endisset</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>{{ __('Date of Birth') }}</p></td>
-                                        <td>
-                                            <p>
-                                                @isset($p->birthday) 
-                                                    @php echo e(date("F d, Y", strtotime($p->birthday))) @endphp
-                                                @endisset
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>{{ __('Place of Birth') }}</p></td>
-                                        <td><p>@isset($p->birthplace) {{ $p->birthplace }} @endisset</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>{{ __('Home Address') }}</p></td>
-                                        <td><p>@isset($p->homeaddress) {{ $p->homeaddress }} @endisset</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>{{ __('National ID') }}</p></td>
-                                        <td><p>@isset($p->nationalid) {{ $p->nationalid }} @endisset</p></td>
-                                    </tr>
                                     <tr>
                                         <td colspan="2">
                                             <h4 class="ui dividing header">{{ __('Designation') }}</h4>
@@ -168,8 +222,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-                    </div>
-                </div>
+                        </div>
+                    {{-- </div>
+                </div> --}}
             </div>
         </div>
     </div>

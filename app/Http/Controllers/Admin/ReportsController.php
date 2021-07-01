@@ -39,13 +39,93 @@ class ReportsController extends Controller
 
 	public function empAtten(Request $request) 
 	{
+
+		if(isset($_GET['employee'])){
+			$emp = explode('-',$_GET['employee']);
+			$emp_id = $emp[1];
+			$emp_name = $emp[0];
+		}
+	
+			// echo '<br>---GET--<br>';
+			// echo '<pre>';
+			// print_r($_GET['employee']);
+			// echo '</pre>';
+			// echo $emp_id;
+			// echo '<br>--,.GET---<br>';
+
+
 		if (permission::permitted('reports')=='fail'){ return redirect()->route('denied'); }
 		
 		$today = date('M, d Y');
 		$empAtten = table::attendance()->get();
 		$employee = table::people()->join('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')->where('tbl_people.employmentstatus', 'Active')->get();
 		table::reportviews()->where('report_id', 2)->update(array('last_viewed' => $today));
-        $tf = table::settings()->value("time_format");
+		$tf = table::settings()->value("time_format");
+		
+		/* Filter Data */
+
+		if (permission::permitted('reports')=='fail'){ return redirect()->route('denied'); }
+		$id = null;
+		$datefrom = null;
+		$dateto = null;
+
+		if(isset($emp_id)){
+		
+			$id = $emp_id;
+		}
+		if( isset($_GET['datefrom'])){
+			$datefrom = $_GET['datefrom'];
+		}
+		if( isset($_GET['dateto'])){
+			$dateto = $_GET['dateto'];
+		}
+		
+		if ($id == null AND $datefrom == null AND $dateto == null) 
+		{
+			$data = table::attendance()->select('idno', 'date', 'employee', 'timein', 'timeout', 'totalhours')->get();
+			// return response()->json($data);
+			return view('admin.reports.report-employee-attendance', compact('empAtten', 'employee', 'tf','data'));
+		}
+
+		if($id !== null && $datefrom == null && $dateto == null ) 
+		{
+		 	$data = table::attendance()->where('idno', $id)->select('idno', 'date', 'employee', 'timein', 'timeout', 'totalhours')->get();
+			// return response()->json($data);
+			// echo '<br>---data--<br>';
+			// echo '<pre>';
+			// 	print_r($data);
+			// echo '</pre>';
+			// echo '<br>-----<br>';
+			// echo 'id= '.$id;
+			// die();
+			return view('admin.reports.report-employee-attendance', compact('empAtten', 'employee', 'tf','data'));
+
+		} elseif ($id !== null AND $datefrom !== null AND $dateto !== null) {
+			$data = table::attendance()->where('idno', $id)->whereBetween('date', [$datefrom, $dateto])->select('idno', 'date', 'employee', 'timein', 'timeout', 'totalhours')->get();
+			// echo '<br>---data--<br>';
+			// echo '<pre>';
+			// 	print_r($data);
+			// echo '</pre>';
+			// echo '<br>-----<br>';
+			// echo 'id= '.$id; 
+			// die();
+			return view('admin.reports.report-employee-attendance', compact('empAtten', 'employee', 'tf','data'));
+			// return response()->json($data);
+		} elseif ($id == null AND $datefrom !== null AND $dateto !== null) {
+			$data = table::attendance()->whereBetween('date', [$datefrom, $dateto])->select('idno', 'date', 'employee', 'timein', 'timeout', 'totalhours')->get();
+			// echo '<br>---data--<br>';
+			// echo '<pre>';
+			// 	print_r($data);
+			// echo '</pre>';
+			// echo '<br>-----<br>';
+			// echo 'id= '.$id;
+			// die();
+			return view('admin.reports.report-employee-attendance', compact('empAtten', 'employee', 'tf','data'));
+			// return response()->json($data);
+		} 
+	
+
+		/*Filter Data end */
 
 		return view('admin.reports.report-employee-attendance', compact('empAtten', 'employee', 'tf'));
 	}

@@ -38,6 +38,10 @@ class LoginController extends Controller
         {
             return redirect('dashboard');
         } 
+        if($type == 3) 
+        {
+            return redirect('client/dashboard');
+        } 
         if($type == null || $type == 0) {
             return redirect('login');
         }

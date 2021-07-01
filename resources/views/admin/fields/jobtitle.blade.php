@@ -12,13 +12,13 @@
     <div class="row">
         <div class="col-md-12">
             <h2 class="page-title">{{ __("Add Job Title") }}
-                <button class="btn btn-success button mini offsettop5 btn-import float-right"><i class="ui icon upload"></i> {{ __("Import") }}</button>
+                <!-- <button class="btn btn-success button mini offsettop5 btn-import float-right ml-3"><i class="ui icon upload "></i> {{ __("Import") }}</button> -->
                 <a href="{{ url('export/fields/jobtitle' )}}" class="btn btn-primary  button mini offsettop5 btm-export float-right"><i class="ui icon download"></i> {{ __("Export") }}</a>
             </h2>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row widget-content widget-content-area br-6">
         <div class="col-md-4">
             <div class="box box-success">
                 <div class="box-body">
@@ -41,7 +41,7 @@
                                 <option value="">Select Department</option>
                                 @isset($d)
                                     @foreach ($d as $dept)
-                                    <option value="{{ $dept->department }}" data-id="{{ $dept->id }}"> {{ $dept->department
+                                    <option value="{{ $dept->department }},{{ $dept->id }}" data-id="{{ $dept->id }}"> {{ $dept->department
                                         }}</option>
                                     @endforeach
                                 @endisset

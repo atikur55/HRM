@@ -18,24 +18,25 @@
             </div>    
         </div>
 
-        <div class="row">
+        
+        <div class="row widget-content widget-content-area br-6">
             <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-body reportstable">
                     <form action="" method="get" accept-charset="utf-8" class="ui small form form-filter" id="filterform">
                         @csrf
-                        <div class="inline two fields">
-                            <div class="three wide field">
+                        <div class="inline two form-groups">
+                            <div class="three wide form-group">
                                 <label>{{ __("Date Range") }}</label>
-                                <input id="datefrom" type="text" name="" value="" placeholder="Start Date" class="airdatepicker">
+                                <input id="datefrom" type="date" name="" value="" placeholder="Start Date" class="form-control">
                                 <i class="ui icon calendar alternate outline calendar-icon"></i>
                             </div>
 
-                            <div class="two wide field">
-                                <input id="dateto" type="text" name="" value="" placeholder="End Date" class="airdatepicker">
+                            <div class="two wide form-group">
+                                <input id="dateto" type="date" name="" value="" placeholder="End Date" class="form-control">
                                 <i class="ui icon calendar alternate outline calendar-icon"></i>
                             </div>
-                            <button id="btnfilter" class="ui button positive small"><i class="ui icon filter alternate"></i> {{ __("Filter") }}</button>
+                            <button id="btnfilter" class="btn btn-success ui button positive small"><i class="ui icon filter alternate"></i> {{ __("Filter") }}</button>
                         </div>
                     </form>
 
@@ -113,7 +114,7 @@
 
     <script type="text/javascript">
     $('#dataTables-example').DataTable({responsive: true,pageLength: 15,lengthChange: false,searching: false,ordering: true});
-    $('.airdatepicker').datepicker({ language: 'en', dateFormat: 'yyyy-mm-dd' });
+    $('.form-control').datepicker({ language: 'en', dateFormat: 'yyyy-mm-dd' });
 
     $('#filterform').submit(function(event) {
         event.preventDefault();

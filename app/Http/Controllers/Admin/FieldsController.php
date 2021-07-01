@@ -14,6 +14,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
+use App\NewEmployee;
 
 class FieldsController extends Controller
 {
@@ -117,9 +118,15 @@ class FieldsController extends Controller
       $v = $request->validate([
         'jobtitle' => 'required|alpha_dash_space|max:100',
       ]);
+     
 
+      $dept = explode(',',$request->department);
+      
       $jobtitle = mb_strtoupper($request->jobtitle);
-      $dept_code = $request->dept_code;
+      $dept_code = $dept[1];
+
+      // dd($dept_code);
+      // die();
 
       table::jobtitle()->insert([
         [
@@ -269,4 +276,20 @@ class FieldsController extends Controller
 
       return redirect('fields/leavetype/leave-groups')->with('success', trans("Deleted!"));
     }
+
+    // Update Atikur Rahman
+    public function company_name($company_name)
+    {
+        $company_name = $company_name;
+        $employees = NewEmployee::orderBy('id','desc')->get();
+        // return response()->json($employees);
+        return view('admin.company.employee',compact('company_name','employees'));
+    }
+    public function field_company_employee()
+    {
+      return view('admin.employee.create');
+    }
+      
+
+
 } 

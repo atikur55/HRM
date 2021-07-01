@@ -113,6 +113,7 @@ class RolesController extends Controller
 
     public function updateperm(Request $request) 
     {
+
         if (permission::permitted('roles-permission')=='fail'){ return redirect()->route('denied'); }
 
         $v = $request->validate([
@@ -122,7 +123,6 @@ class RolesController extends Controller
 
         $perms = $request->perms;
         $role_id = Crypt::decryptString($request->role_id);
-
         table::permissions()->where('role_id', $role_id)->delete();
 
         if(isset($perms))
@@ -131,8 +131,8 @@ class RolesController extends Controller
                 table::permissions()->insert([
                     [
                         'role_id' => $role_id,
-                        'perm_id' => $perm
-                    ],
+                        'perm_id' => $perm,
+                    ]
                 ]);
             }
         }

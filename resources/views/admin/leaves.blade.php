@@ -9,10 +9,11 @@
 
     <div class="container-fluid">
         <div class="row">
-            <h2 class="page-title">{{ __('Leaves of Absence') }}</h2>
+            {{-- <h2 class="page-title">{{ __('Leaves of Absence') }}</h2> --}}
+            <h2 class="page-title">{{ __('Leave') }}</h2>
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
             <div class="box box-success">
                 <div class="box-body">
                     <table width="100%" class="table table-striped table-hover" id="dataTables-example" data-order='[[ 0, "asc" ]]'>
@@ -38,14 +39,15 @@
                                     <td>@php echo e(date('M d, Y', strtotime($data->returndate))) @endphp</td>
                                     <td><span class="">{{ $data->status }}</span></td>
                                     <td class="align-right">
-                                        <a href="{{ url('leaves/edit/'.$data->id) }}" class="ui circular basic icon button tiny"><i class="icon edit outline"></i></a>
-                                        <a href="{{ url('leaves/delete/'.$data->id) }}" class="ui circular basic icon button tiny"><i class="icon trash alternate outlin"></i></a>
+                                        <a href="{{ url('leaves/edit/'.$data->id) }}" class="btn btn-success ui circular basic icon button tiny"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ url('leaves/delete/'.$data->id) }}" class="btn btn-danger ui circular basic icon button tiny"><i class="fa fa-trash 
+                                            "></i></a>
                                     
-                                        @isset($data->comment)
+                                        {{-- @isset($data->comment)
                                             @if($data->comment != null)
-                                                <button class="ui circular basic icon button tiny uppercase" data-tooltip='{{ $data->comment }}' data-variation='wide' data-position='top right'><i class="ui icon comment alternate"></i></button>
+                                                <button class="btn btn-success ui circular basic icon button tiny uppercase" data-tooltip='{{ $data->comment }}' data-variation='wide' data-position='top right'><i class="fa fa-plus"></i>do</button>
                                             @endif
-                                        @endisset
+                                        @endisset --}}
                                     </td>
                                 </tr>
                                 @endforeach

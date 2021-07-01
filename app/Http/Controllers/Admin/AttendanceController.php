@@ -15,6 +15,8 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
+use App\User;
+use Auth;
 
 class AttendanceController extends Controller
 {
@@ -23,11 +25,21 @@ class AttendanceController extends Controller
     {
         if (permission::permitted('attendance')=='fail'){ return redirect()->route('denied'); }
         
-        $data = table::attendance()->orderBy('date', 'desc')->take(60)->get();
+        // $data = table::attendance()->orderBy('date', 'desc')->take(60)->get();
         $ss = table::settings()->select('clock_comment', 'time_format')->first();
         $employees = table::people()->get();
         $tf = table::settings()->value("time_format");
         $cc = table::settings()->value("clock_comment");
+        $user = User::where('id',Auth::id())->first();
+        if ($user->acc_type == 2) 
+        {
+            $data = table::attendance()->orderBy('date', 'desc')->take(60)->get();
+        } 
+        else 
+        {
+            $data = table::attendance()->where('reference',$user->id)->orderBy('date', 'desc')->take(60)->get();
+            // dd($data);die();
+        }
         
         return view('admin.attendance', compact('data', 'ss', 'employees', 'tf', 'cc'));
     }
@@ -136,6 +148,7 @@ class AttendanceController extends Controller
 
     public function addEntry(Request $request)
     {
+     
         if (permission::permitted('attendance')=='fail'){ return redirect()->route('denied'); }
 
         if ($request->ref == NULL) {
@@ -301,21 +314,59 @@ class AttendanceController extends Controller
 
     public function getFilter(Request $request) 
 	{
-		if (permission::permitted('reports')=='fail'){ return redirect()->route('denied'); }
+		// if (permission::permitted('reports')=='fail'){ return redirect()->route('denied'); }
 		
-		$datefrom = $request->datefrom;
-		$dateto = $request->dateto;
+		// $datefrom = $request->datefrom;
+		// $dateto = $request->dateto;
 		
-		if ($datefrom == null AND $dateto == null) 
+		// if ($datefrom == null AND $dateto == null) 
+		// {
+		// 	$data = table::attendance()->select('id', 'idno', 'date', 'employee', 'timein', 'timeout', 'totalhours', 'comment', 'status_timein', 'status_timeout')->get();
+		// 	return response()->json($data);
+		// }
+
+        // if ($datefrom !== null AND $dateto !== null) 
+        // {
+		// 	$data = table::attendance()->whereBetween('date', [$datefrom, $dateto])->select('id', 'idno', 'date', 'employee', 'timein', 'timeout', 'totalhours', 'comment', 'status_timein', 'status_timeout')->get();
+		// 	return response()->json($data);
+        // } 
+        /*--- OLD END --*/
+
+        /*-- NEW START --*/
+        
+        $data = table::attendance()->orderBy('date', 'desc')->take(60)->get();
+        $ss = table::settings()->select('clock_comment', 'time_format')->first();
+        $employees = table::people()->get();
+        $tf = table::settings()->value("time_format");
+        $cc = table::settings()->value("clock_comment");
+
+        if (permission::permitted('reports')=='fail'){ return redirect()->route('denied'); }
+        $datefrom = null;
+        $dateto = null;
+   
+
+        if(isset($_GET['datefrom'])) $datefrom = $request->datefrom;
+        if(isset($_GET['dateto'])) $dateto = $request->dateto;
+        
+        if ($datefrom == null AND $dateto == null) 
 		{
-			$data = table::attendance()->select('id', 'idno', 'date', 'employee', 'timein', 'timeout', 'totalhours', 'comment', 'status_timein', 'status_timeout')->get();
-			return response()->json($data);
+            $data = table::attendance()->select('id', 'idno', 'date', 'employee', 'timein', 'timeout', 'totalhours', 'comment', 'status_timein', 'status_timeout')->get();
+            
+       
+
+            return view('admin.attendance', compact('data', 'ss', 'employees', 'tf', 'cc'));
+         
+            // return response()->json($data);
 		}
 
         if ($datefrom !== null AND $dateto !== null) 
         {
-			$data = table::attendance()->whereBetween('date', [$datefrom, $dateto])->select('id', 'idno', 'date', 'employee', 'timein', 'timeout', 'totalhours', 'comment', 'status_timein', 'status_timeout')->get();
-			return response()->json($data);
-		} 
+            $data = table::attendance()->whereBetween('date', [$datefrom, $dateto])->select('id', 'idno', 'date', 'employee', 'timein', 'timeout', 'totalhours', 'comment', 'status_timein', 'status_timeout')->get();
+            // print_r($data);die();
+            return view('admin.attendance', compact('data', 'ss', 'employees', 'tf', 'cc'));
+			// return response()->json($data);
+        } 
+        
+  
 	}
 }

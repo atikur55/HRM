@@ -33,16 +33,16 @@
                     <div class="two fields">
                         <div class="field">
                             <label for="">{{ __("Leave from") }}</label>
-                            <input id="leavefrom" type="text" placeholder="Date" name="leavefrom" class="airdatepicker" value="@isset($l->leavefrom){{ $l->leavefrom }}@endisset"/>
+                            <input id="leavefrom" style="width:100%" type="text" placeholder="Date" name="leavefrom" class="airdatepicker" value="@isset($l->leavefrom){{ $l->leavefrom }}@endisset"/>
                         </div>
                         <div class="field">
                             <label for="">{{ __("Leave to") }}</label>
-                            <input id="leaveto" type="text" placeholder="Date" name="leaveto" class="airdatepicker" value="@isset($l->leaveto){{ $l->leaveto }}@endisset"/>
+                            <input id="leaveto" style="width:100%" type="text" placeholder="Date" name="leaveto" class="airdatepicker" value="@isset($l->leaveto){{ $l->leaveto }}@endisset"/>
                         </div>
                     </div>
                     <div class="field">
                         <label for="">{{ __("Return Date") }}</label>
-                        <input id="returndate" type="text" placeholder="Enter Return date" name="returndate" class="airdatepicker uppercase" value="@isset($l->returndate){{ $l->returndate }}@endisset"/>
+                        <input id="returndate" style="width:100%" type="text" placeholder="Enter Return date" name="returndate" class="airdatepicker uppercase" value="@isset($l->returndate){{ $l->returndate }}@endisset"/>
                     </div>
                     <div class="field">
                         <label>{{ __("Reason") }}</label>

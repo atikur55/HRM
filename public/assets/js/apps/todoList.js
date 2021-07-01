@@ -341,6 +341,8 @@ $(".add-tsk").click(function(){
   var delta = quill.getContents();
   var $_textDelta = JSON.stringify(delta);
 
+  // console.log($_task);
+
   $html = '<div class="todo-item all-list">'+
               '<div class="todo-item-inner">'+
                   '<div class="n-chk text-center">'+

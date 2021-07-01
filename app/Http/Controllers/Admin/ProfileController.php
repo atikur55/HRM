@@ -30,7 +30,11 @@ class ProfileController extends Controller
 		$leavetype = table::leavetypes()->get();
 		$leavegroup = table::leavegroup()->get();
 
-        return view('admin.profile-view', compact('p', 'c', 'i', 'leavetype', 'leavegroup'));
+		
+
+		// dd($i);die();
+
+        return view('admin.profile-view', compact('p', 'c', 'i', 'leavetype', 'leavegroup'	));
     }
 
    	public function delete($id, Request $request)
@@ -70,7 +74,9 @@ class ProfileController extends Controller
     {
 		if (permission::permitted('employees-edit')=='fail'){ return redirect()->route('denied'); }
 
-		$company_details = table::companydata()->where('id', $id)->first();
+		// $company_details = table::companydata()->where('id', $id)->first();
+		$company_details = table::companydata()->where('reference', $id)->first();
+		// dd($company_details);die();
 		$person_details = table::people()->where('id', $id)->first();
 		$company = table::company()->get();
 		$department = table::department()->get();
@@ -87,8 +93,8 @@ class ProfileController extends Controller
 
 		$v = $request->validate([
 			'id' => 'required|max:200',
-			'lastname' => 'required|alpha_dash_space|max:155',
-			'firstname' => 'required|alpha_dash_space|max:155',
+			// 'lastname' => 'required|alpha_dash_space|max:155',
+			// 'firstname' => 'required|alpha_dash_space|max:155',
 			// 'mi' => 'required|alpha_dash_space|max:155',
 			// 'age' => 'required|digits_between:0,199|max:3',
 			// 'gender' => 'required|alpha|max:155',
@@ -108,12 +114,19 @@ class ProfileController extends Controller
 			// 'leaveprivilege' => 'required|max:155',
 			'idno' => 'required|max:155',
 			// 'employmenttype' => 'required|alpha_dash_space|max:155',
-			'employmentstatus' => 'required|alpha_dash_space|max:155',
+			// 'employmentstatus' => 'required|alpha_dash_space|max:155',
 			// 'startdate' => 'required|date|max:155',
 			// 'dateregularized' => 'required|date|max:155'
 		]);
 
+		$father = $request->father;
+		$mother = $request->mother;
+		$emergency_contact = $request->emergency_contact_name.'_'.$request->emergency_contact_relation.'_'.$request->emergency_number;
+
+	  
+
 		$id = Crypt::decryptString($request->id);
+
 		$lastname = mb_strtoupper($request->lastname);
 		$firstname = mb_strtoupper($request->firstname);
 		$mi = mb_strtoupper($request->mi);
@@ -138,6 +151,7 @@ class ProfileController extends Controller
 		$employmentstatus = $request->employmentstatus;
 		$startdate = date("Y-m-d", strtotime($request->startdate));
 		$dateregularized = date("Y-m-d", strtotime($request->dateregularized));
+		$salary = $request->salary;
 
 		$file = $request->file('image');
 		if ($file != null) 
@@ -167,9 +181,13 @@ class ProfileController extends Controller
 			'employmenttype' => $employmenttype,
 			'employmentstatus' => $employmentstatus,
 			'avatar' => $name,
+			'salary'=>$salary,
+			'father'=>$father,
+			'mother'=>$mother,
+			'emergency_contact'=>$emergency_contact
 		]);
 
-		table::companydata()->where('reference', $id)->update([
+		table::companydata()->where('idno',$idno)->update([
 			'company' => $company,
 			'department' => $department,
 			'jobposition' => $jobposition,

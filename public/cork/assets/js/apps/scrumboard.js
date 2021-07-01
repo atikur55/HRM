@@ -7,6 +7,7 @@ $(function() {
     |                                       |
     =========================================
     */
+    console.log('found');
 
     var Container = {
         scrumboard: $('.scrumboard'),

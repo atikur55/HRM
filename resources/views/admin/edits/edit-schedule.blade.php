@@ -19,7 +19,7 @@
             </div>    
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-content">
@@ -36,75 +36,75 @@
                 @endif
                 <form id="edit_schedule_form" action="{{ url('schedules/update') }}" class="ui form" method="post" accept-charset="utf-8">
                     @csrf
-                    <div class="field">
+                    <div class="form-group">
                         <label>{{ __('Employee') }}</label>
                         <input type="text" value="@isset($s->employee){{ $s->employee }}@endisset" name="employee" class="readonly" readonly="" />
                     </div>
 
-                    <div class="two fields">
-                        <div class="field">
+                    <div class="two form-groups">
+                        <div class="form-group">
                             <label for="">{{ __('Start time') }}</label>
-                            <input type="text" placeholder="00:00:00 AM" name="intime" class="jtimepicker" value="@php if($tf == 1 && $s->intime != null) { echo e(date('h:i A', strtotime($s->intime))); } else { echo e(date('H:i', strtotime($s->intime))); } @endphp"/>
+                            <input type="datetime" placeholder="00:00:00 AM" name="intime" class="form-control" value="@php if($tf == 1 && $s->intime != null) { echo e(date('h:i A', strtotime($s->intime))); } else { echo e(date('H:i', strtotime($s->intime))); } @endphp"/>
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <label for="">{{ __('Off time') }}</label>
-                            <input type="text" placeholder="00:00:00 PM" name="outime" class="jtimepicker" value="@php if($tf == 1 && $s->outime != null) { echo e(date('h:i A', strtotime($s->outime))); } else { echo e(date('H:i', strtotime($s->outime))); } @endphp"/>
+                            <input type="datetime" placeholder="00:00:00 PM" name="outime" class="form-control" value="@php if($tf == 1 && $s->outime != null) { echo e(date('h:i A', strtotime($s->outime))); } else { echo e(date('H:i', strtotime($s->outime))); } @endphp"/>
                         </div>
                     </div>
 
-                    <div class="field">
+                    <div class="form-group">
                         <label for="">{{ __('From') }}</label>
-                        <input type="text" placeholder="Date" name="datefrom" class="airdatepicker" value="@isset($s->datefrom){{ $s->datefrom }}@endisset"/>
+                        <input type="datetime" placeholder="Date" name="datefrom" class="form-control" value="@isset($s->datefrom){{ $s->datefrom }}@endisset"/>
                     </div>
-                    <div class="field">
+                    <div class="form-group">
                         <label for="">{{ __('To') }}</label>
-                        <input type="text" placeholder="Date" name="dateto" class="airdatepicker" value="@isset($s->dateto){{ $s->dateto }}@endisset"/>
+                        <input type="datetime" placeholder="Date" name="dateto" class="form-control" value="@isset($s->dateto){{ $s->dateto }}@endisset"/>
                     </div>
 
-                    <div class="eight wide field">
+                    <div class="eight wide form-group">
                         <label for="">{{ __('Hours') }}</label>
-                        <input type="text" placeholder="0" name="hours" value="@isset($s->hours){{ $s->hours }}@endisset"/>
+                        <input class="form-control" type="text" placeholder="0" name="hours" value="@isset($s->hours){{ $s->hours }}@endisset"/>
                     </div>
 
-                    <div class="grouped custom fields field">
+                    <div class="grouped custom form-groups form-group">
                         <label>{{ __('Rest day(s)') }}</label>
-                        <div class="field">
+                        <div class="form-group">
                             <div class="ui checkbox sunday @isset($r) @if(in_array('Sunday', $r) == true) checked @endif @endisset">
                                 <input type="checkbox" name="restday[]" value="Sunday" @isset($r) @if(in_array('Sunday', $r) == true) checked @endif @endisset>
                                 <label>{{ __('Sunday') }}</label>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <div class="ui checkbox @isset($r) @if(in_array('Monday', $r) == true) checked @endif @endisset">
                                 <input type="checkbox" name="restday[]" value="Monday" @isset($r) @if(in_array('Monday', $r) == true) checked @endif @endisset>
                                 <label>{{ __('Monday') }}</label>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <div class="ui checkbox @isset($r) @if(in_array('Tuesday', $r) == true) checked @endif @endisset">
                                 <input type="checkbox" name="restday[]" value="Tuesday" @isset($r) @if(in_array('Tuesday', $r) == true) checked @endif @endisset>
                                 <label>{{ __('Tuesday') }}</label>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <div class="ui checkbox @isset($r) @if(in_array('Wednesday', $r) == true) checked @endif @endisset">
                                 <input type="checkbox" name="restday[]" value="Wednesday" @isset($r) @if(in_array('Wednesday', $r) == true) checked @endif @endisset>
                                 <label>{{ __('Wednesday') }}</label>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <div class="ui checkbox @isset($r) @if(in_array('Thursday', $r) == true) checked @endif @endisset">
                                 <input type="checkbox" name="restday[]" value="Thursday" @isset($r) @if(in_array('Thursday', $r) == true) checked @endif @endisset>
                                 <label>{{ __('Thursday') }}</label>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <div class="ui checkbox @isset($r) @if(in_array('Friday', $r) == true) checked @endif @endisset">
                                 <input type="checkbox" name="restday[]" value="Friday" @isset($r) @if(in_array('Friday', $r) == true) checked @endif @endisset>
                                 <label>{{ __('Friday') }}</label>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <div class="ui checkbox saturday @isset($r) @if(in_array('Saturday', $r) == true) checked @endif @endisset">
                                 <input type="checkbox" name="restday[]" value="Saturday" @isset($r) @if(in_array('Saturday', $r) == true) checked @endif @endisset>
                                 <label>{{ __('Saturday') }}</label>
@@ -122,8 +122,8 @@
 
                 <div class="box-footer">
                     <input type="hidden" name="id" value="@isset($e_id){{ $e_id }}@endisset">
-                    <button class="ui positive approve small button" type="submit" name="submit"><i class="ui checkmark icon"></i> {{ __('Update') }}</button>
-                    <a href="{{ url('schedules') }}" class="ui black grey small button"><i class="ui times icon"></i> {{ __('Cancel') }}</a>
+                    <button class="btn btn-success ui positive approve small button" type="submit" name="submit"><i class=" ui checkmark icon"></i> {{ __('Update') }}</button>
+                    <a href="{{ url('schedules') }}" class="btn btn-danger ui black grey small button"><i class=" ui times icon"></i> {{ __('Cancel') }}</a>
                 </div>
                 </form>
                 </div>

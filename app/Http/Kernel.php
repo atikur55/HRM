@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         'checkstatus' => \App\Http\Middleware\CheckStatus::class,
         'admin' => \App\Http\Middleware\Admin::class,
         'employee' => \App\Http\Middleware\Employee::class,
+        'client' => \App\Http\Middleware\Client::class,
+        'XSS' => \App\Http\Middleware\XSS::class,
     ];
 
     /**

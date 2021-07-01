@@ -11,10 +11,16 @@
 
     <div class="container-fluid">
         <div class="row">
-            <h2 class="page-title">{{ __("User Roles") }}
-                <button class="btn btn-info ui positive button mini offsettop5 btn-add pull-right"><i class="ui icon plus"></i>{{ __("Add") }}</button>
-                <a href="{{ url('users') }}" class="btn btn-primary ui basic blue button mini offsettop5 pull-right"><i class="ui icon chevron left"></i>{{ __("Return") }}</a>
-            </h2>
+
+            <div class="col-md-12">
+
+                <h2 class="page-title">{{ __("User Roles") }}
+                    {{-- <button class="btn btn-info ui positive button mini offsettop5 btn-add pull-right"><i class="ui icon plus"></i>{{ __("Add") }}</button> --}}
+                    <a href="{{ url('users') }}" class="btn btn-primary ui basic blue button mini offsettop5 pull-right"><i class="ui icon chevron left"></i>{{ __("Return") }}</a>
+                </h2>
+
+            </div>
+       
         </div>
 
         <div class="row">
@@ -31,7 +37,7 @@
             @endif
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
             <div class="box box-success">
                 <div class="box-body">
                     <table width="100%" class="table table-striped table-hover" id="dataTables-example" data-order='[[ 0, "asc" ]]'>

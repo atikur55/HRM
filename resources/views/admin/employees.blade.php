@@ -6,14 +6,54 @@
     @endsection
 
     @section('content')
-                
+             
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
-                <div class="table-responsive mb-4 mt-4">
+                <a href="{{url('employees/new')}}" class="btn btn-success float-right" style="text-align: center; margin:0px 20px 20px 0px"><i class="fa fa-plus"></i>Add</a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  New Register Employee
+                </button>
+
+<!-- Ne Register -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{url('new_register_post')}}" method="POST">
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Name" class="form-control" style="width:100%;">
+            </div>
+            <div class="form-group">
+                <input type="text" name="email" placeholder="Email" class="form-control" style="width:100%;">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Password" class="form-control">
+            </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+         </form>
+      </div>
+    </div>
+  </div>
+</div>
+@if(session('success'))
+<div class="alert alert-success">
+    <strong>{{session('success')}}</strong>
+</div>
+@endif
+                <div class="table-responsive mb-4 mt-4">               
                     <table id="zero-config" class="table table-hover" style="width:100%">
                         <thead>
-                  
-
                             <tr>
                                 <th>{{ __('ID') }}</th> 
                                 <th>{{ __('Employee') }}</th> 
@@ -29,6 +69,7 @@
                         <tbody>
                             @isset($data)
                             @foreach ($data as $employee)
+                            {{-- @foreach ($employees as $employee) --}}
                             <tr>
                                 <td>{{ $employee->idno }}</td>
                                 <td>{{ $employee->lastname }}, {{ $employee->firstname }}</td>

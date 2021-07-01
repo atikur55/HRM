@@ -6,53 +6,75 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>HRM </title>
-    <link rel="icon" type="image/x-icon" href="{{asset('cork')}}/assets/img/favicon.ico" />
-    <link href="{{asset('cork')}}/assets/css/loader.css" rel="stylesheet" type="text/css" />
-    <script src="{{asset('cork')}}/assets/js/loader.js"></script>
 
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link href="{{asset('cork')}}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{asset('cork')}}/assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="{{asset('cork')}}/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="{{asset('cork')}}/assets/css/dashboard/dash_2.css" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-
-    <link href="{{asset('cork')}}/assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-
-    
-    <!-- BEGIN DATATABLE PAGE LEVEL STYLES -->
-    <link rel="stylesheet" type="text/css" href="{{asset('cork')}}/plugins/table/datatable/datatables.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('cork')}}/plugins/table/datatable/dt-global_style.css">
-    <!-- END DATATABLE PAGE LEVEL STYLES -->
-
-       <!-- BEGIN APP CONTACT LEVEL STYLES -->
-       <link rel="stylesheet" type="text/css" href="{{asset('cork')}}/assets/css/forms/theme-checkbox-radio.css">
-    <link href="{{asset('cork')}}/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{asset('cork')}}/assets/css/apps/contacts.css" rel="stylesheet" type="text/css" />
-    <!-- END APP CONTACT LEVEL STYLES -->    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 
-    <!-- Custom css -->
-    
-    <link href="{{asset('cork')}}/assets/css/custome-css/custom-dt.css" rel="stylesheet" type="text/css" />
+
+<!-- =========================CORK BLACK==================================== -->
+
+<?php
+use Illuminate\Support\Facades\DB;
+$theme = DB::table('themes')->where('user_id',Auth::user()->id)->first();
+{{-- dd($theme);die(); --}}
+?>
+@isset($theme)
+    @if($theme->theme == 'black')
+        @include('layouts/include/default-header-black-css')
+    @elseif($theme->theme == 'white')
+        @include('layouts/include/default-header-white-css')
+    @endif
+@else
+  @include('layouts/include/default-header-white-css')
+@endisset
+<!-- ==================== ./CORK BLACK ====================== -->
 
 
-    <!-- OLD -->
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('/assets/vendor/bootstrap/css/bootstrap.min.css') }}"> --}}
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('/assets/vendor/semantic-ui/semantic.min.css') }}"> --}}
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('/assets/vendor/DataTables/datatables.min.css') }}"> --}}
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('/assets/vendor/flag-icon-css/css/flag-icon.min.css') }}"> --}}
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/style.css') }}"> --}}
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    {{-- <title>{{ config('app.name', 'Taskly') }}</title> --}}
+    {{-- <link rel="shortcut icon" href="{{ asset('taskly/assets/img/favicon.ico') }}"> --}}
+
+    <!-- General CSS Files -->
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('taskly/assets/css/iziToast.min.css') }}"> --}}
+
+    <!-- Template CSS -->
+  {{-- <link rel="stylesheet" href="{{ asset('taskly/assets/css/style.css') }}">  --}}
+     {{-- <link rel="stylesheet" href="{{ asset('taskly/assets/css/components.css')}}">
+    <link rel="stylesheet" href="{{ asset('taskly/assets/css/icons.min.css')}}">
+    <link href="{{ asset('taskly/assets/css/easy-autocomplete.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    @stack('style')  --}}
+
+
+     <!-- CLOCK -->
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+        {{-- <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/assets/images/img/favicon-16x16.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/img/favicon-32x32.png') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('/assets/images/img/favicon.ico') }}">
+
+        <title>Essential Infotech Attendance</title>
+        <link rel="stylesheet" type="text/css" href="{{ asset('/assets/vendor/bootstrap/css/bootstrap.min.css') }}"> --}}
+        {{-- <link rel="stylesheet" type="text/css" href="{{ asset('/assets/vendor/semantic-ui/semantic.min.css') }}"> --}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/clock-admin-dashboard.css') }}">
+        <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <!-- CLOCK END -->
+
+
+@yield('widget-css')
+@yield('css')
+
 
 </head>
 
 <body>
+    @php
+    $user = App\User::where('id',Auth::id())->first();
+    @endphp
     <!-- BEGIN LOADER -->
     <div id="load_screen">
         <div class="loader">
@@ -70,33 +92,84 @@
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
                     <a href="index.html">
-                        <img src="{{asset('cork')}}/assets/img/icon.png" class="navbar-logo" alt="logo">
+                        {{-- <img src="{{asset('cork')}}/assets/img/icon.png" class="navbar-logo" alt="logo"> --}}
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="{{url('dashboard')}}" class="nav-link"> HRM Dashboard </a>
+                    @if($user->acc_type==2)
+                    <a href="{{url('dashboard')}}" class="nav-link"> HRM DASHBOARD </a>
+                    @else
+                    <a href="{{url('dashboard')}}" class="nav-link"> Client Area</a>
+                    @endif
                 </li>
             </ul>
 
-            <ul class="navbar-item flex-row ml-md-0 ml-auto">
+            {{-- <ul class="navbar-item flex-row ml-md-0 ml-auto">
                 <li class="nav-item align-self-center search-animated">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-            
+
                 </li>
-            </ul>
+            </ul> --}}
+
 
             <ul class="navbar-item flex-row ml-md-auto">
-                <li class="nav-item dropdown language-dropdown ">
-                <a href="{{url('clock')}}" class="nav-link dropdown-toggle" style="color:white">
-                    
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-watch"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg>
+
+
+
+                <li class="nav-item dropdown language-dropdown">
+                    @isset($theme)
+                    @if($theme->theme == 'white')
+                    <a href="{{url('theme')}}?v=black&id={{Auth::user()->id}}&r=admin" class="nav-link dropdown-toggle" style="color:white" >
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+
+
+
                     </a>
-                
+                    @endif
+
+                    @if($theme->theme == 'black')
+
+                    <a href="{{url('theme')}}?v=white&id={{Auth::user()->id}}&r=admin" class="nav-link dropdown-toggle" >
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+
+                    </a>
+
+
+                    @endif
+                    @else
+                    <a href="{{url('theme')}}?v=black&id={{Auth::user()->id}}&r=admin" class="nav-link dropdown-toggle" style="color:white" >
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+
+
+
+                    </a>
+
+                    @endisset
+                    {{-- <div class="dropdown-menu position-absolute" aria-labelledby="language-dropdown">
+                        <a class="dropdown-item d-flex" href="theme?v=black&id={{Auth::user()->id}}&r=admin"> <span class="align-self-center">&nbsp;Black</span></a>
+
+                        <a class="dropdown-item d-flex" href="theme?v=white&id={{Auth::user()->id}}&r=admin"><span class="align-self-center">&nbsp;White</span></a>
+
+
+
+                    </div> --}}
                 </li>
 
+
+                <li class="nav-item dropdown language-dropdown ">
+                <a href="{{url('clock')}}" class="nav-link dropdown-toggle" style="color:white">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-watch"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg>
+                    </a>
+
+                </li>
+{{--
                 <li class="nav-item dropdown language-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="language-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{asset('cork')}}/assets/img/ca.png" class="flag-width" alt="flag">
@@ -107,9 +180,9 @@
                         <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="{{asset('cork')}}/assets/img/fr.png" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;French</span></a>
                         <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="{{asset('cork')}}/assets/img/ca.png" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;English</span></a>
                     </div>
-                </li>
-             
+                </li> --}}
 
+<!--
                 <li class="nav-item dropdown message-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
@@ -117,7 +190,7 @@
                             <polyline points="22,6 12,13 2,6"></polyline>
                         </svg>
                     </a>
-                    <div class="dropdown-menu p-0 position-absolute" aria-labelledby="messageDropdown">
+                    {{-- <div class="dropdown-menu p-0 position-absolute" aria-labelledby="messageDropdown">
                         <div class="">
                             <a class="dropdown-item">
                                 <div class="">
@@ -171,17 +244,17 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
-                </li>
+                    </div> --}}
+                </li> -->
 
-                <li class="nav-item dropdown notification-dropdown">
+                <!-- <li class="nav-item dropdown notification-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
                             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                         </svg><span class="badge badge-success"></span>
-                    </a>
-                    <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                    </a> -->
+                    {{-- <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
                         <div class="notification-scroll">
 
                             <div class="dropdown-item">
@@ -222,7 +295,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </li>
 
                 <li class="nav-item dropdown user-profile-dropdown">
@@ -231,13 +304,29 @@
                     </a>
                     <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                         <div class="">
+                            <!-- AAtik -->
+                            @if($user->acc_type==2)
                             <div class="dropdown-item">
-                                <a href="user_profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                <a href="{{ url('profile/view') }}/{{Auth::user()->reference}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
                                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
                                     </svg> My Profile</a>
                             </div>
                             <div class="dropdown-item">
+                                <a href="{{ url('update-profile') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg> Update Profile</a>
+                            </div>
+
+                            <div class="dropdown-item">
+                                <a href="{{ url('update-password') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg> Change Password</a>
+                            </div>
+
+                            {{-- <div class="dropdown-item">
                                 <a href="apps_mailbox.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox">
                                         <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
                                         <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
@@ -248,6 +337,21 @@
                                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                     </svg> Lock Screen</a>
+                            </div> --}}
+                            <div class="dropdown-item">
+                                <a href="{{ url('logout') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
+                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                        <polyline points="16 17 21 12 16 7"></polyline>
+                                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                                    </svg> Sign Out</a>
+
+                            </div>
+                            @else
+                            <div class="dropdown-item">
+                                <a href="{{ url('update-profile') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg> Update Profile</a>
                             </div>
                             <div class="dropdown-item">
                                 <a href="{{ url('logout') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
@@ -257,6 +361,7 @@
                                     </svg> Sign Out</a>
 
                             </div>
+                            @endif
                         </div>
                     </div>
                 </li>
@@ -281,15 +386,15 @@
 
                         <nav class="breadcrumb-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{url('dashboard')}}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Analytics</span></li>
+                                <li class="breadcrumb-item"><a href="{{url('dashboard')}}">HRM</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>Employees</span></li>
                             </ol>
                         </nav>
 
                     </div>
                 </li>
             </ul>
-            <ul class="navbar-nav flex-row ml-auto ">
+            {{-- <ul class="navbar-nav flex-row ml-auto ">
                 <li class="nav-item more-dropdown">
                     <div class="dropdown  custom-dropdown-icon">
                         <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Settings</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down">
@@ -305,7 +410,7 @@
                         </div>
                     </div>
                 </li>
-            </ul>
+            </ul> --}}
         </header>
     </div>
     <!--  END NAVBAR  -->
@@ -313,8 +418,8 @@
     <!--  BEGIN MAIN CONTAINER  -->
     <div class="main-container" id="container">
 
-        <div class="overlay"></div>
-        <div class="search-overlay"></div>
+        {{-- <div class="overlay"></div>
+        <div class="search-overlay"></div> --}}
 
         <!--  BEGIN SIDEBAR  -->
         <div class="sidebar-wrapper sidebar-theme">
@@ -336,6 +441,7 @@
                         </a>
                     </li>
 
+
                     <li class="menu">
                         <a href="{{url('employees')}}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
@@ -344,18 +450,252 @@
                                     <circle cx="9" cy="7" r="4" />
                                     <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                                     <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
-                                <span>Employees </span>
+                                <span>Employees</span>
                             </div>
                         </a>
                     </li>
 
+
+
                     <li class="menu">
+                        <a href="#app1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>
+                                <span>Projects & Tasks</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="app1" data-parent="#accordionExample">
+
+                            <li>
+                                <a href="{{ url('workspace') }}"> Workspace </a>
+                            </li>
+                            {{-- <li>
+                                <a href="{{ url('projects') }}"> Projects </a>
+                            </li> --}}
+                            {{-- <li>
+                                <a href="{{ url('todo') }}"> To do list </a>
+                            </li>  --}}
+
+                      </ul>
+                    </li>
+
+                    <li class="menu">
+                        <a href="#pay" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <span>Payroll</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="pay" data-parent="#accordionExample">
+                            <li>
+                                <a href="{{url('payroll')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Add Payroll</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('listpayroll')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Payroll List</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('fields/leavetype')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Leave Type</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('fields/jobtitle')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Job Title</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('employees/new')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>New Employee</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('fields/department')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Department</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu">
+                        <a href="#expense" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <span>Expense</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="expense" data-parent="#accordionExample">
+                            <li>
+                                <a href="{{url('expense')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Add Expense</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('listexpense')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Expense List</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu">
+                        <a href="#clock_attend" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <span>Attendence</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="clock_attend" data-parent="#accordionExample">
+                            <li>
+                                <a href="{{url('attendance')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Attendence</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('clock')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Clock In/Out</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu">
+                        <a href="#client" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                                <span>Client</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="client" data-parent="#accordionExample">
+                            <li>
+                                <a href="{{url('fields/company')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> --}}
+                                        <span>Company</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('client')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> --}}
+                                        <span>Client Note</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{url('registered_client')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> --}}
+                                        <span>Registered Client</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{url('client_message')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> --}}
+                                        <span>Client message</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('registered_client_project')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> --}}
+                                        <span>Client project</span>
+                                    </div>
+                                </a>
+                            </li>
+
+
+                            {{-- <li>
+                                <a href="{{url('listclient')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Client List</span>
+                                    </div>
+                                </a>
+                            </li> --}}
+                        </ul>
+                    </li>
+
+                    {{-- <li class="menu">
                         <a href="{{url('attendance')}}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
                                     <circle cx="12" cy="12" r="10" />
                                     <polyline points="12 6 12 12 16 14" /></svg>
                                 <span>Attendance</span>
+                            </div>
+                        </a>
+                    </li> --}}
+                    <li class="menu">
+                        <a href="{{url('fileupload')}}" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                                <span>File Uploads</span>
                             </div>
                         </a>
                     </li>
@@ -372,7 +712,7 @@
                         </a>
                     </li>
 
-                    <li class="menu">
+                    {{-- <li class="menu">
                         <a href="{{url('leaves')}}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-archive">
@@ -382,6 +722,37 @@
                                 <span>Leave</span>
                             </div>
                         </a>
+                    </li> --}}
+                    <li class="menu">
+                        <a href="#leave_type" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <span>Leave</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="leave_type" data-parent="#accordionExample">
+                            <li>
+                                <a href="{{url('leaves')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Leave</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('fields/leavetype')}}" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span>Leave Type</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="menu">
@@ -391,24 +762,32 @@
                                     <line x1="12" y1="20" x2="12" y2="10" />
                                     <line x1="18" y1="20" x2="18" y2="4" />
                                     <line x1="6" y1="20" x2="6" y2="16" /></svg>
-                                <span>Reports</span>
+                                {{-- <span>Reports</span> --}}
+                                <span>More auto generate reports</span>
                             </div>
                         </a>
                     </li>
-
+                    
+                    @if($user->acc_type == 2)
                     <li class="menu">
                         <a href="{{url('users')}}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                                     <circle cx="12" cy="7" r="4" /></svg>
-                                <span>Users</span>
+                               {{--  <span>Users</span> --}}
+                                <span>Client & Employee</span>
                             </div>
                         </a>
                     </li>
+                    @else
+
+                    @endif
+
+                    
 
 
-                    <li class="menu">
+                   {{--  <li class="menu">
                         <a href="#app" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
@@ -446,6 +825,32 @@
                         </ul>
                     </li>
 
+                    <li class="menu">
+                        <a href="#set" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg>
+
+                                <span>Settings</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="set" data-parent="#accordionExample">
+                           
+                            <li>
+                                <a href="{{url('field_company_employer')}}"> Employer Details </a>
+                            </li>
+                            <li>
+                                <a href="{{url('field_company_employee')}}">Add New Employee</a>
+                            </li>
+                        </ul>
+                    </li> --}}
+
                 </ul>
 
             </nav>
@@ -481,82 +886,113 @@
     </div>
     <!-- END MAIN CONTAINER -->
 
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="{{asset('cork')}}/assets/js/libs/jquery-3.1.1.min.js"></script>
-    <script src="{{asset('cork')}}/bootstrap/js/popper.min.js"></script>
-    <script src="{{asset('cork')}}/bootstrap/js/bootstrap.min.js"></script>
-    <script src="{{asset('cork')}}/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="{{asset('cork')}}/assets/js/app.js"></script>
-    <script>
-        $(document).ready(function() {
-            App.init();
-        });
-    </script>
-    <script src="{{asset('cork')}}/assets/js/custom.js"></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="{{asset('cork')}}/plugins/apex/apexcharts.min.js"></script>
-    <script src="{{asset('cork')}}/assets/js/dashboard/dash_2.js"></script>
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
-    <script src="{{asset('cork')}}/assets/js/dashboard/dash_1.js"></script> 
 
-    
+<!-- Default Black Cork JS -->
 
-    <!-- BEGIN Datatable PAGE LEVEL SCRIPTS -->
-    <script src="{{asset('cork')}}/plugins/table/datatable/datatables.js"></script>
-    <script>
-        $('#zero-config').DataTable({   
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-               "sLengthMenu": "Results :  _MENU_",
+@isset($theme)
+
+    @if($theme->theme == 'black')
+         @include('layouts/include/default-footer-black-js')
+    @elseif($theme->theme == 'white')
+         @include('layouts/include/default-footer-white-js')
+@else
+  @include('layouts/include/default-footer-white-js')
+@endif
+
+
+@endisset
+<!-- ./Default Black Cork JS -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+<script src="{{ asset('taskly/assets/js/iziToast.min.js') }}"></script>
+<script src="{{ asset('taskly/assets/js/stisla.js') }}"></script>
+<script src="{{ asset('taskly/assets/js/scripts.js') }}"></script>
+<script src="{{ asset('taskly/assets/js/scrollreveal.min.js') }}"></script>
+<script src="{{ asset('taskly/assets/js/custom.js') }}"></script>  --}}
+
+@if(isset($currantWorkspace) && $currantWorkspace)
+<script src="{{ asset('taskly/assets/js/jquery.easy-autocomplete.min.js') }}"></script>
+
+<script>
+    var options = {
+        url: function(phrase) {
+            return "{{route('search.json',$currantWorkspace->slug)}}/" + phrase ;
+        },
+        categories: [
+            {
+                listLocation: "Projects",
+                header: "{{ __('Projects') }}"
             },
-            "stripeClasses": [],
-            "lengthMenu": [7, 10, 20, 50],
-            "pageLength": 7 
-        });
-    </script>
-    <!-- END Datatable PAGE LEVEL SCRIPTS -->
+            {
+                listLocation: "Tasks",
+                header: "{{ __('Tasks') }}"
+            }
+        ],
+        getValue: "text",
+        template: {
+            type: "links",
+            fields: {
+                link: "link"
+            }
+        }
+    };
+    $(".search-element input").easyAutocomplete(options);
+</script>
+@endif
 
-    <script src="{{asset('cork')}}/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script src="{{asset('cork')}}/assets/js/apps/contact.js"></script>
+
+@stack('scripts')
+
+@if ($message = Session::get('success'))
+    <script>toastr('Success','{!! $message !!}','success')</script>
+@endif
+
+@if ($message = Session::get('error'))
+    <script>toastr('Error','{!! $message !!}','error')</script>
+@endif
+
+@if ($message = Session::get('info'))
+    <script>toastr('Info','{!! $message !!}','info')</script>
+@endif
+
+
+  <!-- CLOCK JS -->
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 
     {{-- <script src="{{ asset('/assets/vendor/jquery/jquery-3.4.1.min.js') }}"></script> --}}
     {{-- <script src="{{ asset('/assets/vendor/bootstrap/js/bootstrap.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('/assets/vendor/semantic-ui/semantic.min.js') }}"></script>
-    <script src="{{ asset('/assets/vendor/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
-    <script src="{{ asset('/assets/vendor/DataTables/datatables.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/script.js') }}"></script>
-    @if ($success = Session::get('success'))
-    <script>
-        $(document).ready(function() {
-            $.notify({
-                icon: 'ui icon check',
-                message: "{{ $success }}"},
-                {type: 'success',timer: 400}
-            );
-        });
-    </script>
-    @endif
-    
-    @if ($error = Session::get('error'))
-    <script>
-        $(document).ready(function() {
-            $.notify({
-                icon: 'ui icon times',
-                message: "{{ $error }}"},
-                {type: 'danger',timer: 400});
-        });
-    </script>
-    @endif
+    <script src="{{ asset('/assets/vendor/momentjs/moment.min.js') }}"></script>
+    <script src="{{ asset('/assets/vendor/momentjs/moment-timezone-with-data.js') }}"></script>
+    {{-- <script src="{{ asset('/assets/vendor/semantic-ui/semantic.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('/assets/js/script.js') }}"></script> --}}
 
-    @yield('scripts')
-    
-    --}}
+    <script>
+        var timezone = "@isset($tz){{ $tz }}@endisset";
+    </script>
+
+
+
+
+    <!-- CLOCK JS END -->
+
+
+
+@yield('widget-js')
+@yield('script')
+@yield('js_script')
 
 </body>
 

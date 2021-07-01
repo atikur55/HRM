@@ -1,17 +1,44 @@
 @extends('layouts.default')
 
 @section('meta')
-<title>Dashboard | Workday Time Clock</title>
+<title>Dashboard | Admin panel</title>
 <meta name="description" content="Workday dashboard, view recent attendance, recent leaves of absence, and newest employees">
 @endsection
 
 @section('content')
 
-<div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+@php
+$account = App\User::where('id',Auth::id())->first();
+@endphp
+<!-- Admin -->
+@if($account->acc_type==2)
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 widget widget-chart-one">
+
+ <div class="">
+        <div class="">
+            @include('admin.clock.clock')
+        </div>
+  </div>
+</div>
+
+<div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing mt-5">
     <div class="widget widget-chart-one">
         <div class="widget-heading">
-            <h5 class="">Revenue</h5>
+            <h5 class="">Expense</h5>
             <ul class="tabs tab-pills">
+                <li>
+                    <select style="
+                    color: rgb(16 78 202);
+                    height: 35px;
+                    font-size: 16px;
+                    padding: 0px;
+                " name="select_graph_year" id="select_graph_year" class="form-control tabmenu" id="tb_1"  onchange="yearAjax(this);" >
+                       @foreach($year_data as $y)
+
+                            <option value="{{$y}}" )>{{$y}}</option>
+                        @endforeach
+                    </select>
+                </li>
                 <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">Monthly</a></li>
             </ul>
         </div>
@@ -19,17 +46,17 @@
         <div class="widget-content">
             <div class="tabs tab-content">
                 <div id="content_1" class="tabcontent"> 
-                    <div id="revenueMonthly"></div>
+                    <div id="expenseMonthly"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing mt-5">
     <div class="widget widget-chart-two">
         <div class="widget-heading">
-            <h5 class="">Sales by Category</h5>
+            <h5 class="">Employee Activity</h5>
         </div>
         <div class="widget-content">
             <div id="chart-2" class=""></div>
@@ -149,7 +176,7 @@
                     <div class="w-summary-details">
 
                         <div class="w-summary-info">
-                            <h6>{{ __('Online') }}</h6>
+                            <h6>{{ __('Clocked in') }}</h6>
                             <p class="summary-count">@isset($is_online_now) {{ $is_online_now }} @endisset</p>
                         </div>
 
@@ -175,7 +202,7 @@
                     <div class="w-summary-details">
 
                         <div class="w-summary-info">
-                            <h6>{{ __('Offline') }}</h6>
+                            <h6>{{ __('Not Clocked In') }}</h6>
                             <p class="summary-count">@isset($is_offline_now) {{ $is_offline_now }} @endisset</p>
                         </div>
 
@@ -276,13 +303,11 @@
     </div>
 </div>
 
-
-
 <div class="col-xl-6 col-lg-12 col-md-6 col-sm-12 col-12 layout-spacing">
     <div class="widget widget-table-two">
 
         <div class="widget-heading">
-            <h5 class="">Recent Orders</h5>
+            <h5 class="">Employee List</h5>
         </div>
 
         <div class="widget-content">
@@ -290,6 +315,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Serial</th>
                             <th>
                                 <div class="th-content">Name</div>
                             </th>
@@ -299,23 +325,40 @@
                             <th>
                                 <div class="th-content">Start Date</div>
                             </th>
+                            <th>
+                                <div class="th-content">Working Mode</div>
+                            </th>
 
                         </tr>
                     </thead>
                     <tbody>
-
+                        @php $i=1; @endphp
                         @isset($emp_all_type)
                         @foreach ($emp_all_type as $data)
                         <tr>
                             <td>
+                                {{$i++}}
+                            </td>
+                            <td>
                                 <div class="td-content customer-name">{{ $data->lastname }}, {{ $data->firstname }}</div>
                             </td>
                             <td>
-                                <div class="td-content product-brand">{{ $data->jobposition }}</div>
+                                <div class="td-content product-brand">{{ $data->department }}</div>
                             </td>
                             <td>
                                 <div class="td-content">@php echo e(date('M d, Y', strtotime($data->startdate))) @endphp</div>
                             </td>
+                             <td>
+                             
+                            @if($data->timein != null && $data->timeout == null)
+                            <span style="color:green">Working</span >
+                            @elseif($data->timeout != null) 
+                                 <span style="color:red">Not Online</span >
+                            @endif
+
+                                
+                            </td> 
+                      
 
                         </tr>
                         @endforeach
@@ -329,6 +372,76 @@
     </div>
 </div>
 
+<!-- 
+<div class="col-xl-6 col-lg-12 col-md-6 col-sm-12 col-12 layout-spacing">
+    <div class="widget widget-table-two">
+
+        <div class="widget-heading">
+            <h5 class="">Absent Employee List</h5>
+        </div>
+
+        <div class="widget-content">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Serial</th>
+                            <th>
+                                <div class="th-content">Name</div>
+                            </th>
+                            <th>
+                                <div class="th-content">Position</div>
+                            </th>
+                            <th>
+                                <div class="th-content">Start Date</div>
+                            </th>
+                            <th>
+                                <div class="th-content">Working Mode</div>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $i=1; @endphp
+                        @isset($emp_all)
+                        @foreach ($emp_all as $data)
+                        <tr>
+                            <td>
+                                {{$i++}}
+                            </td>
+                            <td>
+                                <div class="td-content customer-name">{{ $data->lastname }}, {{ $data->firstname }}</div>
+                            </td>
+                            <td>
+                                <div class="td-content product-brand">{{ $data->department }}</div>
+                            </td>
+                            <td>
+                                <div class="td-content">@php echo e(date('M d, Y', strtotime($data->startdate))) @endphp</div>
+                            </td>
+                             <td>
+                             
+                            {{-- @if($data->timein != null && $data->timeout == null)
+                            <span style="color:green">Working</span >
+                            @elseif($data->timeout != null) 
+                                 <span style="color:red">Not Online</span >
+                            @endif --}}
+                            <span style="color:red">Absent</span >
+                                
+                            </td> 
+                      
+
+                        </tr>
+                        @endforeach
+                        @endisset
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+-->
 <div class="col-xl-6 col-lg-12 col-md-6 col-sm-12 col-12 layout-spacing">
     <div class="widget widget-table-two">
 
@@ -341,6 +454,9 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>
+                                Serial
+                            </th>
                             <th>
                                 <div class="th-content">Name</div>
                             </th>
@@ -355,7 +471,7 @@
                     </thead>
                         <tbody>
 
-
+                            @php $i=1;$j=1 @endphp
                         @isset($a)
                            @foreach($a as $v)
 
@@ -363,10 +479,13 @@
                                 @if($v->timein != null && $v->timeout == null)
                                     <tr>
                                         <td>
+                                            {{$i++}}
+                                        </td>
+                                        <td>
                                             <div class="td-content customer-name">{{ $v->employee }}</div>
                                         </td>
                                         <td>
-                                            <div class="td-content product-brand">Time-In</div>
+                                            <div class="td-content product-brand"> <span style="color:green">Time-In</span> </div>
                                         </td>
                                         <td>
                                             <div class="td-content">    
@@ -382,9 +501,13 @@
 
                                     </tr>
                                 @endif
+                              
 
                                 @if($v->timein != null && $v->timeout != null)
                                     <tr>
+                                        <td>
+                                            {{$j++}}
+                                        </td>
                                         <td>
                                             <div class="td-content customer-name">{{ $v->employee }}</div>
                                         </td>
@@ -462,7 +585,187 @@
         </div>
     </div>
 </div>
+@elseif($account->acc_type==3)
+<h2>Welcome {{ Auth::user()->name }}</h2>
+
+@else
+
+@endif
 
 
+<script>
 
+
+    /* circle graph */
+var is_online_now = {{$is_online_now}}
+var is_offline_now = {{$is_offline_now}}
+/* end circle graph */
+
+
+// console.log('monthly ============================================================================================= ');
+// console.log(monthly_expense);
+
+var exptotalarr =[];
+var expyeararr =[];
+@foreach($exparr as $k=>$v)
+var n = Number({{$v}})
+
+exptotalarr.push(n
+);
+expyeararr.push("{{$k}}"
+);
+@endforeach
+var x = exptotalarr.toString();
+// console.log(exptotalarr)
+// console.log(expyeararr)
+// console.log(x)
+// console.log(getArray.getJSONObject(exparr))
+// console.log('showed-----'+is_online_now);
+
+/* end revenue graph*/
+</script>
+
+
+@endsection
+
+@section('script')
+ <script type="text/javascript">
+    // elements day, time, date
+    var elTime = document.getElementById('show_time');
+    var elDate = document.getElementById('show_date');
+    var elDay = document.getElementById('show_day');
+
+    // time function to prevent the 1s delay
+    var setTime = function() {
+        // initialize clock with timezone
+        var time = moment().tz('Africa/Johannesburg');
+       
+
+        // set time in html
+        @if($tf == 1) 
+            elTime.innerHTML= time.format("hh:mm:ss A");
+        @else
+            elTime.innerHTML= time.format("kk:mm:ss");
+        @endif
+
+        // set date in html
+        elDate.innerHTML = time.format('MMMM D, YYYY');
+
+        // set day in html
+        elDay.innerHTML = time.format('dddd');
+    }
+
+    setTime();
+    setInterval(setTime, 1000);
+
+    $('.btnclock').click(function(event) {
+        var is_comment = $(this).data("type");
+        if (is_comment == "timein") {
+            $('.comment').slideDown('200').show();
+        } else {
+            $('.comment').slideUp('200');
+        }
+        $('input[name="idno"]').focus();
+        $('.btnclock').removeClass('active animated fadeIn')
+        $(this).toggleClass('active animated fadeIn');
+    });
+
+    $("#rfid").on("input", function(){
+        var url, type, idno, comment;
+        url = $("#_url").val();
+        type = $('.btnclock.active').data("type");
+        idno = $('input[name="idno"]').val();
+        idno.toUpperCase();
+        comment = $('textarea[name="comment"]').val();
+
+        setTimeout(() => {
+            $(this).val("");
+        }, 600);
+
+        $.ajax({ url: url + '/attendance/add', type: 'post', dataType: 'json', data: {idno: idno, type: type, clockin_comment: comment}, headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+
+            success: function(response) {
+                if(response['error'] != null) 
+                {
+                    $('.message-after').addClass('notok').hide();
+                    $('#type, #fullname').text("").hide();
+                    $('#time').html("").hide();
+                    $('.message-after').removeClass("ok");
+                    $('#message').text(response['error']);
+                    $('#fullname').text(response['employee']);
+                    $('.message-after').slideToggle().slideDown('400');
+                } else {
+                    function type(clocktype) {
+                        if (clocktype == "timein") {
+                            return "{{ __('Time In at') }}";
+                        } else {
+                            return "{{ __('Time Out at') }}";
+                        }
+                    }
+                    $('.message-after').addClass('ok').hide();
+                    $('.message-after').removeClass("notok");
+                    $('#type, #fullname, #message').text("").show();
+                    $('#time').html("").show();
+                    $('#type').text(type(response['type']));
+                    $('#fullname').text(response['firstname'] + ' ' + response['lastname']);
+                    $('#time').html('<span id=clocktime>' + response['time'] + '</span>' + '.' + '<span id=clockstatus> {{ __("Success!") }}</span>');
+                    $('.message-after').slideToggle().slideDown('400');
+                }
+            }
+        })
+    });
+
+    $('#btnclockin').click(function(event) {
+        var url, type, idno, comment;
+        url = $("#_url").val();
+        type = $('.btnclock.active').data("type");
+        idno = $('input[name="idno"]').val();
+        idno.toUpperCase();
+        comment = $('textarea[name="comment"]').val();
+
+        $.ajax({
+            url: url + '/attendance/add',type: 'post',dataType: 'json',data: {idno: idno, type: type, clockin_comment: comment},headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+
+            success: function(response) {
+                if(response['error'] != null) 
+                {
+                    $('.message-after').addClass('notok').hide();
+                    $('#type, #fullname').text("").hide();
+                    $('#time').html("").hide();
+                    $('.message-after').removeClass("ok");
+                    $('#message').text(response['error']);
+                    $('#fullname').text(response['employee']);
+                    $('.message-after').slideToggle().slideDown('400');
+                } else {
+                    function type(clocktype) {
+                        if (clocktype == "timein") {
+                            return "{{ __('Time In at') }}";
+                        } else {
+                            return "{{ __('Time Out at') }}";
+                        }
+                    }
+                    $('.message-after').addClass('ok').hide();
+                    $('.message-after').removeClass("notok");
+                    $('#type, #fullname, #message').text("").show();
+                    $('#time').html("").show();
+                    $('#type').text(type(response['type']));
+                    $('#fullname').text(response['firstname'] + ' ' + response['lastname']);
+                    $('#time').html('<span id=clocktime>' + response['time'] + '</span>' + '.' + '<span id=clockstatus> {{ __("Success!") }}</span>');
+                    $('.message-after').slideToggle().slideDown('400');
+                }
+            }
+        })
+    });
+    </script> 
+    
+ 
+<script>
+var year = [];
+var i =0;
+@foreach($year_data as $y)
+    year[i++] = {{$y}}
+@endforeach
+
+</script>
+<script src="{{ asset('assets/js/dashboard/revenue_graph.js') }}"></script>
 @endsection

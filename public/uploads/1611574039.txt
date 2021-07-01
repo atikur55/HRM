@@ -1,0 +1,1553 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jan 05, 2021 at 01:02 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `bisolve`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client`
+--
+
+CREATE TABLE `client` (
+  `id` int(11) NOT NULL,
+  `client_name` varchar(255) DEFAULT NULL,
+  `client_mobile` varchar(255) DEFAULT NULL,
+  `client_email` varchar(255) DEFAULT NULL,
+  `client_company` varchar(255) DEFAULT NULL,
+  `client_address` text DEFAULT NULL,
+  `client_priority` varchar(255) NOT NULL DEFAULT 'high' COMMENT 'high,middle,low',
+  `client_website` text DEFAULT NULL,
+  `client_note` text DEFAULT NULL,
+  `client_meeting_date` datetime DEFAULT NULL,
+  `client_created_by` int(11) NOT NULL,
+  `client_updated_by` int(11) DEFAULT NULL,
+  `created_time` timestamp NULL DEFAULT current_timestamp(),
+  `updated_time` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `client`
+--
+
+INSERT INTO `client` (`id`, `client_name`, `client_mobile`, `client_email`, `client_company`, `client_address`, `client_priority`, `client_website`, `client_note`, `client_meeting_date`, `client_created_by`, `client_updated_by`, `created_time`, `updated_time`) VALUES
+(7, 'Test', '32423432423423', 'test@test.com', 'testsss', 'lkdfjkasd', 'high', 'some.com', 'fsdafbkj kjfas', '2020-12-23 00:00:00', 1, 1, '2020-12-01 07:04:23', '2020-12-01 07:04:23'),
+(8, 'fasdf', '32432231', 'weraw@gmail.com', 'fasd', 'fgsdfs', 'middle', 'fasdf', 'dsfds', '2020-12-23 02:46:00', 1, 1, '2020-12-01 07:16:35', '2020-12-01 07:16:35'),
+(9, 'dfas', 'dasf', 'fdsa', 'fdas', 'fdsaf', 'high', 'fdas', 'fdas', NULL, 1, NULL, '2020-12-01 07:18:21', '2020-12-01 07:18:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_contacts`
+--
+
+CREATE TABLE `client_contacts` (
+  `id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `client_name` varchar(255) DEFAULT NULL,
+  `client_mobile` varchar(255) DEFAULT NULL,
+  `client_email` varchar(255) DEFAULT NULL,
+  `client_message` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `client_message_subject` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `client_contacts`
+--
+
+INSERT INTO `client_contacts` (`id`, `client_id`, `client_name`, `client_mobile`, `client_email`, `client_message`, `created_at`, `updated_at`, `client_message_subject`) VALUES
+(2, 23, 'fsdaf', '2341234', 'test@test.com', 'dfas', '2020-12-31 08:16:51', NULL, 'msdfas  fas '),
+(3, 23, 'fasdf', 'dsafasd32423', 'dsfa', 'dsafa', '2020-12-31 08:34:51', NULL, 'fdsfas sda f'),
+(4, 23, 'fasdf', 'fds', 'fadsf', 'dasf', '2020-12-31 08:53:51', NULL, NULL),
+(6, 20, 'rrr', '32432432', 'rr@r.com', 'fdasf', '2020-12-31 10:18:27', NULL, NULL),
+(7, 20, 'fads', '3243243', 'fdasf@wadf.com', 'sadfs', '2020-12-31 10:14:28', NULL, NULL),
+(8, 20, 'client3', NULL, 'client3@gmail.com', 'dasfsdf', '2020-12-31 10:20:58', NULL, NULL),
+(9, 20, 'client3', NULL, 'client3@gmail.com', 'sdaf', '2020-12-31 10:26:58', NULL, NULL),
+(10, 20, 'client3', NULL, 'client3@gmail.com', 'fsda', '2020-12-31 10:22:59', NULL, 'dsfas'),
+(11, 20, 'client3', NULL, 'client3@gmail.com', 'fdf', '2020-12-31 10:29:59', NULL, 'fasd'),
+(12, 20, NULL, NULL, NULL, 'from postmane dsfaf  fdas das f', '2020-12-31 11:01:34', NULL, 'from postmane'),
+(13, 20, NULL, NULL, NULL, 'asdf asdf asdf asdf asd f', '2020-12-31 12:14:54', NULL, 'hu'),
+(14, 24234234, NULL, NULL, NULL, 'asdf asdf asdf asdf asd f', '2020-12-31 12:33:54', NULL, 'hu');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expense`
+--
+
+CREATE TABLE `expense` (
+  `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `list_qty_price_total` text NOT NULL,
+  `total_expense` float NOT NULL,
+  `expense_date` datetime NOT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `expense`
+--
+
+INSERT INTO `expense` (`id`, `category_id`, `list_qty_price_total`, `total_expense`, `expense_date`, `comment`, `created_at`, `updated_at`, `created_by`) VALUES
+(1, 7, 'chair_1000_10_10000.00,table_2500_5_12500.00,pen_10_200_2000.00', 3000, '2020-11-25 00:00:00', NULL, NULL, NULL, NULL),
+(2, 7, 'mouse_10_200_2000.00,keyboard_20_500_10000.00,monitor_10_200_2000.00', 1, '2020-11-09 00:00:00', NULL, NULL, NULL, NULL),
+(4, 7, 'dfas_2_2_4.00,fdas_2_2_4.00,fads_2_2_4.00,sadfa_2_2_4.00,asdf_2_2_4.00', 2, '2019-01-11 18:42:25', NULL, NULL, NULL, NULL),
+(5, 5, 'list1_6_4_24.00,list1_4_3_12.00', 5, '2020-12-25 00:00:00', NULL, NULL, NULL, NULL),
+(6, 5, 'mouse_5435_5435_29539225.00,mouse_5435_543_2951205.00', 2, '2019-02-11 00:00:00', NULL, NULL, NULL, NULL),
+(7, 5, 'dasd_543540_3453543_1877138762220.00', 2, '2018-12-24 00:00:00', NULL, NULL, NULL, NULL),
+(8, 5, 'adfa_2_3_6.00,fasdf_4_2_8.00', 14, '2021-01-13 00:00:00', NULL, NULL, NULL, NULL),
+(9, 5, 'fasd_2_3_6.00', 6, '2021-02-24 00:00:00', NULL, NULL, NULL, NULL),
+(10, 5, 'fasd_2_3_6.00', 6, '2021-03-19 00:00:00', NULL, NULL, NULL, NULL),
+(11, 5, 'adsf_3_2_6.00', 6, '2021-06-15 00:00:00', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expense_category`
+--
+
+CREATE TABLE `expense_category` (
+  `id` int(11) NOT NULL,
+  `expense_category_name` varchar(255) NOT NULL,
+  `timstamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `expense_category`
+--
+
+INSERT INTO `expense_category` (`id`, `expense_category_name`, `timstamp`, `created_by`) VALUES
+(4, 'chair', '2020-11-30 06:13:45', 1),
+(5, 'table', '2020-11-30 06:13:52', 1),
+(7, 'Default', '2020-11-30 06:23:37', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2016_06_01_000001_create_oauth_auth_codes_table', 1),
+(2, '2016_06_01_000002_create_oauth_access_tokens_table', 1),
+(3, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1),
+(4, '2016_06_01_000004_create_oauth_clients_table', 1),
+(5, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1),
+(6, '2020_12_08_134537_workspace', 2),
+(7, '2020_12_08_134923_userworkspaces', 2),
+(8, '2020_12_09_130943_projects', 3),
+(9, '2020_12_09_131206_userprojects', 4),
+(10, '2020_12_10_135153_tasks', 5),
+(11, '2020_12_13_142145_usertasks', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_access_tokens`
+--
+
+CREATE TABLE `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_access_tokens`
+--
+
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('02894073fbf6e53a409d23db2a52f2f54b0d7136d36201f4fe485e953fb62ef851933ec83050284f', 1, 4, 'EITDEV', '[]', 0, '2020-11-29 09:52:01', '2020-11-29 09:52:01', '2021-11-29 15:52:01'),
+('0ca80d125f20820304c46001b7aab63fb5af8ec7bd8a655e37b22b410bddc7b120b4d5b4c5e5d777', 1, 4, 'EITDEV', '[]', 0, '2020-11-29 09:55:19', '2020-11-29 09:55:19', '2021-11-29 15:55:19'),
+('0fbd51b4e36cec6888dece771a95bc18415d1a6fee52f075a518caca38e8fd26384b873435940fe1', 2, 4, 'EITDEV', '[]', 0, '2020-11-29 10:06:06', '2020-11-29 10:06:06', '2021-11-29 16:06:06'),
+('1ae0d2e017e4340d872ce32fe1d8679e5ca15c3134209a69d540a26cbbdb0c79f7aed0128aab48f0', 5, 4, 'EITDEV', '[]', 0, '2020-11-29 10:14:21', '2020-11-29 10:14:21', '2021-11-29 16:14:21'),
+('1ba31e89b0eac275a7aff0b47ad8cfdbe3371f7d4ba663055cb27c74de85edcb485c44a14389ebd6', 5, 4, 'EITDEV', '[]', 0, '2020-11-29 10:13:16', '2020-11-29 10:13:16', '2021-11-29 16:13:16'),
+('1cb0bac87b9ba0c63f57e6e1052c0dbe97a3a672bafae7a7004f8daa6e3532a2cd243271167b1582', 1, 4, 'EITDEV', '[]', 0, '2020-11-29 10:10:04', '2020-11-29 10:10:04', '2021-11-29 16:10:04'),
+('342129215726f11414631a9c1d55bdca0fe3e30fe2acb86551337d517fe0d85294d23d8b9031593b', 2, 4, 'EITDEV', '[]', 0, '2020-12-31 11:14:14', '2020-12-31 11:14:14', '2021-12-31 17:14:14'),
+('366441f04b553937c09af21c83172cd4769c9a16cbbfa4043b211534d617d2c650361fc390968738', 1, 4, 'EITDEV', '[]', 0, '2020-11-29 09:34:25', '2020-11-29 09:34:25', '2021-11-29 15:34:25'),
+('3d7e7c5c07ef04d1f7afada81ebbf98052bc04b8b2760ed24526a71d94b9536445a3e7c4eb6266e3', 20, 4, 'EITDEV', '[]', 0, '2020-12-31 12:51:07', '2020-12-31 12:51:07', '2021-12-31 18:51:07'),
+('3faca3c8357c91266fd37ce1cb1bc0bb1a9ccb195507e46e80636296792dfd12f99f8acc6c786947', 2, 4, 'EITDEV', '[]', 0, '2020-11-29 10:05:56', '2020-11-29 10:05:56', '2021-11-29 16:05:56'),
+('68f311d773699ec515ee24ce42f988e825eadc43439e8d9cc03fef21e4b308fa27898d673fa8f5f2', 1, 4, 'EITDEV', '[]', 0, '2020-11-29 10:00:50', '2020-11-29 10:00:50', '2021-11-29 16:00:50'),
+('77cf74f0aa8e788166caedf95f38fdad2024584eefcaa2afa4ecba1d5105f8011597f5054a4fce83', 1, 4, 'EITDEV', '[]', 0, '2020-11-29 09:41:54', '2020-11-29 09:41:54', '2021-11-29 15:41:54'),
+('a19fde01e3a16159e0d410841b66f8a3985313e0c5a2ac8bc440e76544ea338a5a370f68fe769b69', 20, 4, 'EITDEV', '[]', 0, '2020-12-31 11:08:29', '2020-12-31 11:08:29', '2021-12-31 17:08:29'),
+('a2c562b7767437ca5b44b6a27ccdd29844fe320aed4f864b284d12928704a97e9749fcbf05a628b8', 1, 4, 'EITDEV', '[]', 0, '2020-11-29 10:03:40', '2020-11-29 10:03:40', '2021-11-29 16:03:40'),
+('bc8a474012a05a991f9634ed7b2ae93c0a2c68c9fe1ccc0aa9192c39156cae5cb15d38042f115206', 2, 4, 'EITDEV', '[]', 0, '2020-11-29 10:10:51', '2020-11-29 10:10:51', '2021-11-29 16:10:51'),
+('cb5c5e053299c2aab18e91c392f4139965032b623d3b220b0412d9a484f73a3b0d2cffcb0be3a712', 5, 4, 'EITDEV', '[]', 0, '2020-11-29 10:09:05', '2020-11-29 10:09:05', '2021-11-29 16:09:05'),
+('cc3f363b545fe199ea3cd0a10ff1eb110313a0c266573c88bed67426e1daf52d0acfc32d45c13c96', 1, 4, 'EITDEV', '[]', 0, '2020-11-29 09:34:32', '2020-11-29 09:34:32', '2021-11-29 15:34:32'),
+('d7379101b8c2d578b426cd07a34e7edcd67f734f2453f534897ef6c0cc518d686e50c3e6a97a7d5c', 20, 4, 'EITDEV', '[]', 0, '2020-12-31 11:12:35', '2020-12-31 11:12:35', '2021-12-31 17:12:35'),
+('e386cf0c893b57d95359a2425f8bea02e2aa89ad0c914d893f2d1e277222078fbf1f19185cde1bdf', 2, 4, 'EITDEV', '[]', 0, '2020-11-29 10:05:21', '2020-11-29 10:05:21', '2021-11-29 16:05:21'),
+('e7f0e0f167d27dfa2fded3ebb03041b59c702f8e5ee64facb2f1d7d2f060f85dae99a5c9080dbc74', 2, 4, 'EITDEV', '[]', 1, '2020-11-29 10:10:31', '2020-11-29 10:10:31', '2021-11-29 16:10:31'),
+('f48d3cfc2d25c944ca1d44dded576838ad56b81cc51dd79227173b098a0df06a11f5a4ab63f11c29', 5, 4, 'EITDEV', '[]', 0, '2020-11-29 10:12:32', '2020-11-29 10:12:32', '2021-11-29 16:12:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_auth_codes`
+--
+
+CREATE TABLE `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_clients`
+--
+
+CREATE TABLE `oauth_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_clients`
+--
+
+INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'Laravel Personal Access Client', 'Oy7plxYNQTPs5IYOtiGrtqx2sh9BW53yyw4RT3Ev', NULL, 'http://localhost', 1, 0, 0, '2020-11-29 16:55:31', '2020-11-29 16:55:31'),
+(2, NULL, 'Laravel Password Grant Client', 'mKjMR41oKz7qpIKxPAYh7AiCsTVeEMnEvMLDIQEG', 'users', 'http://localhost', 0, 1, 0, '2020-11-29 16:55:31', '2020-11-29 16:55:31'),
+(3, NULL, 'authToken', '00zaPss8wdpLO1mBJ7iY7iNFEjmaDXq7GIueopt3', NULL, 'http://localhost', 1, 0, 0, '2020-11-29 08:49:42', '2020-11-29 08:49:42'),
+(4, NULL, 'Laravel Personal Access Client', 'yPXAgIKulaMSPvEC3xfwUD81KosThfjly0lZBknM', NULL, 'http://localhost', 1, 0, 0, '2020-11-29 09:03:40', '2020-11-29 09:03:40'),
+(5, NULL, 'Laravel Password Grant Client', 'QNb2FdGdqQW6SniCK5xVOClHDD0Nci5FHD3DtBHD', 'users', 'http://localhost', 0, 1, 0, '2020-11-29 09:03:40', '2020-11-29 09:03:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_personal_access_clients`
+--
+
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_personal_access_clients`
+--
+
+INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
+(1, 1, '2020-11-29 16:55:31', '2020-11-29 16:55:31'),
+(2, 3, '2020-11-29 08:49:42', '2020-11-29 08:49:42'),
+(3, 4, '2020-11-29 09:03:40', '2020-11-29 09:03:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_refresh_tokens`
+--
+
+CREATE TABLE `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll`
+--
+
+CREATE TABLE `payroll` (
+  `id` int(11) NOT NULL,
+  `reference` int(11) NOT NULL,
+  `salary` double DEFAULT NULL,
+  `deduction` double DEFAULT NULL,
+  `allowance` double DEFAULT NULL,
+  `bonus` double DEFAULT NULL,
+  `payment_created_at` timestamp NULL DEFAULT NULL,
+  `payment_updated_at` timestamp NULL DEFAULT NULL,
+  `month` varchar(255) DEFAULT NULL,
+  `year` year(4) DEFAULT NULL,
+  `fromdate` datetime DEFAULT NULL,
+  `todate` datetime DEFAULT NULL,
+  `attendance_count` int(11) DEFAULT NULL,
+  `holidays` int(11) DEFAULT NULL,
+  `leaves` int(11) DEFAULT NULL,
+  `absent` int(11) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `approve_key` int(11) DEFAULT NULL COMMENT '1 if done, 2 if pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payroll`
+--
+
+INSERT INTO `payroll` (`id`, `reference`, `salary`, `deduction`, `allowance`, `bonus`, `payment_created_at`, `payment_updated_at`, `month`, `year`, `fromdate`, `todate`, `attendance_count`, `holidays`, `leaves`, `absent`, `comment`, `approve_key`) VALUES
+(4, 1, 24997, 33, NULL, 15, '2020-11-24 05:13:57', '2020-11-30 06:49:10', NULL, NULL, '2020-11-01 00:00:00', '2020-11-30 00:00:00', NULL, NULL, NULL, NULL, 'test', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `project_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `project_status` enum('Ongoing','Finished','OnHold') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Ongoing',
+  `project_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `project_start_date` date DEFAULT NULL,
+  `project_end_date` date DEFAULT NULL,
+  `project_budget` int(11) DEFAULT 0,
+  `project_workspace_id` int(11) NOT NULL,
+  `project_created_by` int(11) NOT NULL,
+  `project_created_at` timestamp NULL DEFAULT NULL,
+  `project_updated_at` timestamp NULL DEFAULT NULL,
+  `assign_to` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `project_name`, `project_status`, `project_description`, `project_start_date`, `project_end_date`, `project_budget`, `project_workspace_id`, `project_created_by`, `project_created_at`, `project_updated_at`, `assign_to`) VALUES
+(15, 'eeeeeeeeee', 'OnHold', 'ee', NULL, NULL, NULL, 13, 13, '2020-12-10 06:03:14', NULL, NULL),
+(16, 'gasd', 'OnHold', 'dsfa', '2020-12-15', '2020-12-21', 343, 13, 13, '2020-12-10 06:26:14', '2020-12-22 07:09:38', NULL),
+(17, 'vu1', 'Ongoing', 'fads', '2020-12-17', '2020-12-22', 222, 15, 15, '2020-12-09 19:11:12', NULL, NULL),
+(18, 'vu2', 'Ongoing', 'fdsf', '2020-12-17', '2020-12-22', 1, 15, 15, '2020-12-09 19:32:17', NULL, NULL),
+(19, 'ee', 'Ongoing', 'ww', '2020-12-16', '2020-12-28', 4, 14, 14, '2020-12-09 19:05:27', NULL, NULL),
+(20, 'sdaf', 'Ongoing', 'fdsaf', '2020-12-23', '2020-12-21', 6, 14, 14, '2020-12-09 19:26:27', NULL, NULL),
+(21, 'test', 'Finished', 'test', '2020-12-20', '2020-12-23', 3, 16, 16, '2020-12-09 19:05:37', NULL, NULL),
+(22, 'vczvxzc', 'Finished', 'cXZ', NULL, NULL, NULL, 16, 16, '2020-12-09 20:54:59', NULL, NULL),
+(23, 'fff', 'Ongoing', 'ff', '2020-12-07', '2020-12-30', 23432, 13, 13, '2020-12-12 19:33:46', '2020-12-23 08:25:21', NULL),
+(24, 'saad project', 'Finished', 'dsafa', '2020-12-06', '2020-12-18', 32324, 13, 13, '2020-12-21 06:17:39', '2020-12-22 07:21:48', NULL),
+(25, 'android for crm uuuu', 'OnHold', 'asdf auuuuu', '2020-12-07', '2020-12-30', 22222, 13, 13, '2020-12-21 10:03:56', '2020-12-22 07:27:59', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `registered_client_projects`
+--
+
+CREATE TABLE `registered_client_projects` (
+  `id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `project_name` varchar(255) NOT NULL,
+  `project_details` text DEFAULT NULL,
+  `project_deadline` date DEFAULT NULL,
+  `project_status` varchar(255) NOT NULL DEFAULT 'Pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `registered_client_projects`
+--
+
+INSERT INTO `registered_client_projects` (`id`, `client_id`, `project_name`, `project_details`, `project_deadline`, `project_status`, `created_at`, `updated_at`) VALUES
+(1, 20, 'fasddsaf', 'fdasfdsff', '2020-12-26', 'Pending', '2020-12-31 10:52:08', NULL),
+(2, 20, 'test', 'dsfa', '2020-12-11', 'Pending', '2020-12-31 10:21:21', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `timezone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `clock_comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rfid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `time_format` int(11) DEFAULT NULL,
+  `iprestriction` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `opt` varchar(800) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `country`, `timezone`, `clock_comment`, `rfid`, `time_format`, `iprestriction`, `opt`) VALUES
+(1, 'Bangladesh', 'Asia/Dhaka', NULL, NULL, 1, NULL, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tasks`
+--
+
+CREATE TABLE `tasks` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `task_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `task_priority` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `task_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `task_start_date` datetime DEFAULT NULL,
+  `task_assign_to` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `task_project_id` int(11) NOT NULL,
+  `task_milestone_id` int(11) DEFAULT NULL,
+  `task_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'todo',
+  `task_order` int(11) DEFAULT 0,
+  `task_created_at` timestamp NULL DEFAULT NULL,
+  `task_updated_at` timestamp NULL DEFAULT NULL,
+  `task_end_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tasks`
+--
+
+INSERT INTO `tasks` (`id`, `task_name`, `task_priority`, `task_description`, `task_start_date`, `task_assign_to`, `task_project_id`, `task_milestone_id`, `task_status`, `task_order`, `task_created_at`, `task_updated_at`, `task_end_date`) VALUES
+(58, 'cc', 'Low', 'cc cc as asdf ads', '2020-12-09 00:00:00', '1122_SAYEED, SAADMAN+001122_DEMO, MANAGER', 24, NULL, 'inprogress', 8, '2020-12-21 06:02:40', '2020-12-21 10:58:49', '2020-12-17 00:00:00'),
+(60, 'my task', 'Low', NULL, '2020-12-15 00:00:00', '001133_DEMO, EMPLOYEE+10487_a', 25, NULL, 'todo', 4, '2020-12-21 10:51:59', NULL, '2020-12-25 00:00:00'),
+(61, 'android ui sghsdf', 'Middle', 'fadsf  adf', '2020-12-09 00:00:00', '001133_DEMO, EMPLOYEE', 25, NULL, 'inprogress', 6, '2020-12-21 11:24:00', '2020-12-21 11:20:01', '2020-12-31 00:00:00'),
+(62, 'daadsf', 'Middle', 'sdfafs', '2020-12-03 00:00:00', '10487_a+001133_DEMO, EMPLOYEE+10320_dd+001122_DEMO, MANAGER', 23, NULL, 'complete', 0, '2020-12-22 08:08:02', '2020-12-23 08:47:21', '2020-12-09 00:00:00'),
+(63, 'fdsadf', 'Middle', 'fsdaf', '2020-12-02 00:00:00', '1122_SAYEED, SAADMAN+001133_DEMO, EMPLOYEE', 21, NULL, 'complete', 2, '2020-12-22 09:39:13', NULL, '2020-12-18 00:00:00'),
+(65, 'dsaf', 'Top', 'fsdaf', '2020-12-19 00:00:00', '001122_DEMO, MANAGER', 24, NULL, 'todo', 0, '2020-12-23 07:36:20', NULL, '2020-12-15 00:00:00'),
+(66, 'sfdh', 'Middle', 'hs', '2020-12-13 00:00:00', '001122_DEMO, MANAGER', 23, NULL, 'inprogress', 0, '2020-12-23 08:25:22', NULL, '2020-12-16 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_company_data`
+--
+
+CREATE TABLE `tbl_company_data` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `reference` int(11) NOT NULL,
+  `company` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `department` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `jobposition` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `companyemail` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `idno` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `startdate` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `dateregularized` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `reason` varchar(455) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `leaveprivilege` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_company_data`
+--
+
+INSERT INTO `tbl_company_data` (`id`, `reference`, `company`, `department`, `jobposition`, `companyemail`, `idno`, `startdate`, `dateregularized`, `reason`, `leaveprivilege`) VALUES
+(1, 1, '', '', '', '', '001122', '2020-02-01', '2020-02-01', '', 3),
+(2, 2, '', '', '', '', '001133', '2020-02-01', '2020-02-01', '', 3),
+(4, 4, '', 'GRAPHICS', '', 'fdas@gad.com', 'DSAF', '1970-01-01', '1970-01-01', '', 3),
+(5, 5, '', '', '', 'test@test.com', '1122', '1970-01-01', '1970-01-01', '', 3),
+(6, 6, 'ESSENTIAL-INFOTECH', 'GRAPHICS', '', 'test@test.com', '3333', '2020-11-02', '2020-12-05', '', NULL),
+(7, 7, 'ESSENTIAL-INFOTECH', 'WEB DEVELOPMENT', '', 'fdas@gad.com', '10005', '2020-11-11', '2020-11-18', '', 3),
+(8, 8, '', '', '', '', '10069', '1970-01-01', '1970-01-01', '', NULL),
+(9, 9, '', '', '', '', '10351', '1970-01-01', '1970-01-01', '', NULL),
+(10, 10, 'ESSENTIAL-INFOTECH', 'WEB DEVELOPMENT', '', '', '10487', '1970-01-01', '1970-01-01', '', 3),
+(11, 11, '', '', '', '', '10320', '1970-01-01', '1970-01-01', '', NULL),
+(12, 12, '', '', '', '', '10376', '1970-01-01', '1970-01-01', '', NULL),
+(13, 13, 'ESSENTIAL-INFOTECH', 'WEB DEVELOPMENT', '', 'w@w.com', '112233', '2020-11-18', '2020-11-14', '', 3),
+(14, 14, 'ESSENTIAL-INFOTECH', '', '', 'fdas@gad.com', '112244', '2020-12-16', '2020-12-09', '', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_form_company`
+--
+
+CREATE TABLE `tbl_form_company` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `company` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_form_company`
+--
+
+INSERT INTO `tbl_form_company` (`id`, `company`) VALUES
+(9, 'ESSENTIAL-INFOTECH');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_form_department`
+--
+
+CREATE TABLE `tbl_form_department` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `department` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_form_department`
+--
+
+INSERT INTO `tbl_form_department` (`id`, `department`) VALUES
+(5, 'Web Development'),
+(6, 'Graphics'),
+(7, 'FRONT END');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_form_jobtitle`
+--
+
+CREATE TABLE `tbl_form_jobtitle` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `jobtitle` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `dept_code` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_form_jobtitle`
+--
+
+INSERT INTO `tbl_form_jobtitle` (`id`, `jobtitle`, `dept_code`) VALUES
+(9, 'JUNIOR WEB DEVELOPER', 5),
+(10, 'SENIOR WEB DEVELOPER', 5),
+(12, 'GRAPHIC DESIGNER', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_form_leavegroup`
+--
+
+CREATE TABLE `tbl_form_leavegroup` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `leavegroup` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `leaveprivileges` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_form_leavegroup`
+--
+
+INSERT INTO `tbl_form_leavegroup` (`id`, `leavegroup`, `description`, `leaveprivileges`, `status`) VALUES
+(3, 'GOVT LEAVE', 'TEST', '3,4', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_form_leavetype`
+--
+
+CREATE TABLE `tbl_form_leavetype` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `leavetype` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `limit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `percalendar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_form_leavetype`
+--
+
+INSERT INTO `tbl_form_leavetype` (`id`, `leavetype`, `limit`, `percalendar`) VALUES
+(3, 'GOVT LEAVE', '15', 'Monthly'),
+(4, 'GOVT HOLYDAYS', '15', 'Monthly');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_people`
+--
+
+CREATE TABLE `tbl_people` (
+  `id` int(6) UNSIGNED NOT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `age` int(3) DEFAULT NULL,
+  `gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `emailaddress` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `civilstatus` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `height` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `weight` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `mobileno` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `birthday` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nationalid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `birthplace` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `homeaddress` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `employmentstatus` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `employmenttype` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `salary` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `emergency_contact` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `father` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mother` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_people`
+--
+
+INSERT INTO `tbl_people` (`id`, `firstname`, `mi`, `lastname`, `age`, `gender`, `emailaddress`, `civilstatus`, `height`, `weight`, `mobileno`, `birthday`, `nationalid`, `birthplace`, `homeaddress`, `employmentstatus`, `employmenttype`, `avatar`, `salary`, `emergency_contact`, `father`, `mother`) VALUES
+(1, 'MANAGER', '', 'DEMO', NULL, '', 'manager@example.com', '', NULL, NULL, NULL, '2020-01-03', '', '', '', 'Active', NULL, '', '24997', 'test_tset_test', 'test', 'test'),
+(2, 'DEMO TEST', '', 'EMPLOYEE DSFAS', NULL, '', 'employee@example.com', '', NULL, NULL, NULL, '2020-01-03', '', '', '', 'Active', NULL, '006.jpg', '25000', NULL, '', ''),
+(4, 'DEMO 2', 'DEMO2', 'DEMO', 20, 'MALE', 'demo2@example.com', 'SINGLE', '6', '3', '544165465', '1998-01-17', '35654156', 'DHAKA', '52156', 'Active', 'Regular', 'logo.png', NULL, NULL, '', ''),
+(5, 'SAADMAN', 'SAAD', 'SAYEED', 26, 'MALE', 'saadman@gmail.com', 'MARRIED', '200', '84', '3243432', '1996-12-14', '35654156', 'DHAKA', '52156', 'Active', 'Regular', '330px-Pierre-Person.jpg', '25000', NULL, '', ''),
+(6, 'TEST', 'TEST', 'TEST', 22, 'FEMALE', 'demo3@example.com', 'MARRIED', '4', '3', '343432432', '2003-08-20', '35654156', 'DHAKA', '52156', 'Active', 'Trainee', 'logo2.png', NULL, NULL, '', ''),
+(10, 'A', 'A', 'A', 33, 'MALE', 'a@a.com', 'MARRIED', '22', '22', '01937570729', '1970-01-01', '', 'DHAKA', '52156', 'Archived', 'Regular', '', NULL, NULL, '', ''),
+(11, 'DD', 'DD', 'DD', 22, 'MALE', 'dd@d.com', 'SINGLE', '22', '22', '324', '2020-11-13', '35654156', 'DHAKA', '52156', 'Active', 'Regular', '330px-Pierre-Person.jpg', '25000', NULL, '', ''),
+(12, 'Y', 'Y', 'Y', 22, 'MALE', 'y@y.com', 'SINGLE', '33', '33', '53425', '2020-11-12', '35654156', 'DHAKA', '52156', 'Active', NULL, '330px-Pierre-Person.jpg', NULL, 'testc_testc_22222', 'testf', 'testm'),
+(13, 'W', 'W', 'W', 22, 'MALE', 'w@w.com', 'SINGLE', '22', '22', '32432', '2020-11-25', '35654156', 'DHAKA', '52156', 'Active', 'Regular', 'Moon.jpg', '30000', NULL, '', ''),
+(14, 'A', 'A', 'A', 22, 'MALE', 'ddvv@d.com', 'SINGLE', '22', '22', '32432', '2020-12-23', '3243', 'DHAKA', '52156', 'Active', 'Regular', '006.jpg', '3', 'test_test_1111', 'test fa', 'ma'),
+(15, 'emp2', '', NULL, NULL, '', 'emp2@gmail.com', '', '', '', '', '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL),
+(16, 'emp2', '', NULL, NULL, '', 'emp2@gmail.com', '', '', '', '', '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL),
+(17, 'emp3', '', NULL, NULL, '', 'emp3@gmail.com', '', '', '', '', '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL),
+(18, 'emp4', '', NULL, NULL, '', 'emp4@gmail.com', '', '', '', '', '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL),
+(19, NULL, '', 'emp5', NULL, '', 'emp5@gmail.com', '', '', '', '', NULL, NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL),
+(20, NULL, '', 'emp7', NULL, '', 'emp7@gmail.com', '', '', '', '', NULL, NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_people_attendance`
+--
+
+CREATE TABLE `tbl_people_attendance` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `reference` int(11) DEFAULT NULL,
+  `idno` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `date` date DEFAULT NULL,
+  `employee` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `timein` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `timeout` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `totalhours` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `status_timein` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `status_timeout` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_people_attendance`
+--
+
+INSERT INTO `tbl_people_attendance` (`id`, `reference`, `idno`, `date`, `employee`, `timein`, `timeout`, `totalhours`, `status_timein`, `status_timeout`, `reason`, `comment`, `created_at`, `ip`) VALUES
+(1, 2, '001133', '2020-10-19', 'EMPLOYEE, DEMO ', '2020-10-19 05:32:00 AM', '2020-10-19 06:35:08 AM', '1.0', 'Ok', 'Ok', '', '', '2020-10-19 09:32:57', NULL),
+(3, 1, '001122', '2020-10-28', 'DEMO, MANAGER ', '2020-10-28 05:57:00 PM', '2020-10-28 12:39:52 PM', '5.17', 'Ok', 'Ok', '', '', '2020-10-27 11:57:13', NULL),
+(4, 2, '001133', '2020-11-09', 'EMPLOYEE, DEMO ', '2020-11-09 12:50:45 PM', '2020-11-09 1:50:45 PM', '1.0', 'Late In', 'On Time', '', '', '2020-11-09 06:50:45', NULL),
+(5, 1, '001122', '2020-11-10', 'DEMO, MANAGER ', '2020-11-10 12:44:39 PM', '2020-11-10 12:44:45 PM', '0.0', 'Late In', 'Early Out', '', '', '2020-11-10 06:44:39', NULL),
+(6, 2, '001133', '2020-11-11', 'EMPLOYEE, DEMO ', '2020-11-11 11:13:20 AM', '2020-11-11 11:13:50 AM', '0.0', 'Late In', 'On Time', '', '', '2020-11-11 05:13:20', NULL),
+(7, 10, '10487', '2020-11-15', 'A, A A', '2020-11-15 12:44:44 PM', '2020-11-15 12:45:24 PM', '0.0', 'Ok', 'Ok', '', '', '2020-11-15 06:44:44', NULL),
+(8, 11, '10320', '2020-11-15', 'DD, DD DD', '2020-11-15 01:10:16 PM', '2020-11-15 01:10:19 PM', '0.0', 'Ok', 'Ok', '', '', '2020-11-15 07:10:16', NULL),
+(9, 12, '10376', '2020-11-15', 'Y, Y Y', '2020-11-15 01:13:55 PM', '2020-11-15 01:14:17 PM', '0.0', 'Ok', 'Ok', '', '', '2020-11-15 07:13:55', NULL),
+(10, 2, '001133', '2020-11-16', 'EMPLOYEE DSFAS, DEMO TEST ', '2020-11-16 01:47:35 PM', NULL, '', 'Late In', '', '', '', '2020-11-16 07:47:35', NULL),
+(11, 5, '1122', '2020-11-16', 'SAYEED, SAADMAN SAAD', '2020-11-16 01:51:44 PM', '2020-12-28 12:13:12 PM', '1006.21', 'Late In', 'Early Out', '', '', '2020-11-16 07:51:44', NULL),
+(12, 1, '001122', '2020-11-22', 'DEMO, MANAGER ', '2020-11-22 12:05:43 PM', '2020-12-31 06:41:24 PM', '942.35', 'Ok', 'Ok', '', '', '2020-11-22 06:05:43', NULL),
+(13, 14, '112244', '2020-12-28', 'A, A A', '2020-12-28 11:52:22 AM', '2020-12-28 11:52:28 AM', '0.0', 'Ok', 'Ok', '', '', '2020-12-28 05:52:22', NULL),
+(14, 5, '1122', '2020-12-28', 'SAYEED, SAADMAN SAAD', '2020-12-28 12:13:16 PM', '2020-12-28 12:19:24 PM', '0.6', 'Late In', 'Early Out', '', '', '2020-12-28 06:13:16', NULL),
+(15, 5, '1122', '2020-12-31', 'SAYEED, SAADMAN SAAD', '2020-12-31 06:40:01 PM', '2021-01-03 11:47:19 AM', '65.7', 'Late In', 'Early Out', '', '', '2020-12-31 12:40:01', NULL),
+(16, 1, '001122', '2020-12-31', 'DEMO, MANAGER ', '2020-12-31 06:42:07 PM', '2020-12-31 06:42:59 PM', '0.0', 'Ok', 'Ok', '', '', '2020-12-31 12:42:07', NULL),
+(17, 5, '1122', '2021-01-03', 'SAYEED, SAADMAN SAAD', '2021-01-03 11:50:49 AM', '2021-01-03 11:51:23 AM', '0.0', 'Late In', 'Early Out', '', '', '2021-01-03 05:50:49', NULL),
+(18, 13, '112233', '2021-01-03', 'W, W W', '2021-01-03 11:54:17 AM', '2021-01-03 11:54:23 AM', '0.0', 'Ok', 'Ok', '', '', '2021-01-03 05:54:17', NULL),
+(19, 5, '1122', '2021-01-04', 'SAYEED, SAADMAN SAAD', '2021-01-04 10:53:05 AM', NULL, '', 'Late In', '', '', '', '2021-01-04 04:53:06', NULL),
+(20, 19, '487219', '2021-01-05', 'EMP5,  ', '2021-01-05 05:36:08 PM', '2021-01-05 05:36:36 PM', '0.0', 'Ok', 'Ok', '', '', '2021-01-05 11:36:08', NULL),
+(21, 20, '524120', '2021-01-05', 'EMP7,  ', '2021-01-05 05:51:49 PM', '2021-01-05 05:52:27 PM', '0.0', 'Ok', 'Ok', '', '', '2021-01-05 11:51:49', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_people_leaves`
+--
+
+CREATE TABLE `tbl_people_leaves` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `reference` int(11) DEFAULT NULL,
+  `idno` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `employee` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `typeid` int(11) DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `leavefrom` date DEFAULT NULL,
+  `leaveto` date DEFAULT NULL,
+  `returndate` date DEFAULT NULL,
+  `reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `archived` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_people_leaves`
+--
+
+INSERT INTO `tbl_people_leaves` (`id`, `reference`, `idno`, `employee`, `typeid`, `type`, `leavefrom`, `leaveto`, `returndate`, `reason`, `status`, `comment`, `archived`) VALUES
+(1, 2, '001133', 'EMPLOYEE, DEMO', 3, 'GOVT LEAVE', '2020-11-12', '2020-11-19', '2021-01-14', 'SDFA', 'Approved', 'ASDAD', NULL),
+(2, 2, '001133', 'EMPLOYEE, DEMO', 3, 'GOVT LEAVE', '2020-11-12', '2020-11-04', '2020-11-10', 'DFGDS', 'Approved', 'DFASDF', NULL),
+(3, 2, '001133', 'EMPLOYEE, DEMO', 3, 'GOVT LEAVE', '2020-11-11', '2020-11-12', '2020-11-12', 'GHURTE JAMU', 'Pending', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_people_schedules`
+--
+
+CREATE TABLE `tbl_people_schedules` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `reference` int(11) DEFAULT NULL,
+  `idno` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `employee` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `intime` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `outime` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `datefrom` date DEFAULT NULL,
+  `dateto` date DEFAULT NULL,
+  `hours` int(11) DEFAULT NULL,
+  `restday` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `archive` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_people_schedules`
+--
+
+INSERT INTO `tbl_people_schedules` (`id`, `reference`, `idno`, `employee`, `intime`, `outime`, `datefrom`, `dateto`, `hours`, `restday`, `archive`) VALUES
+(2, 1, '001122', 'DEMO, MANAGER', '05:07 PM', '06:08 PM', '2020-10-03', '2020-10-30', 3, 'Monday, Tuesday', 1),
+(6, 2, '001133', 'EMPLOYEE DEMO', '04:11 AM', '07:11 AM', '2020-11-10', '2020-11-27', 6, 'Monday, Tuesday, Wednesday', 0),
+(8, 5, '1122', 'SAYEED SAADMAN', '10:00 AM', '06:00 PM', '2020-11-01', '2020-11-25', 8, 'Friday, Saturday', 0),
+(9, 12, '10376', 'Y Y', '01:20 AM', '02:30 PM', '2020-11-16', '2020-11-24', 9, 'Friday, Saturday', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_report_views`
+--
+
+CREATE TABLE `tbl_report_views` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `report_id` int(11) DEFAULT NULL,
+  `last_viewed` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_report_views`
+--
+
+INSERT INTO `tbl_report_views` (`id`, `report_id`, `last_viewed`, `title`) VALUES
+(1, 1, 'Nov, 17 2020', 'Employee List Report'),
+(2, 2, 'Dec, 10 2020', 'Employee Attendance Report'),
+(3, 3, 'Nov, 17 2020', 'Employee Leaves Report'),
+(4, 4, 'Nov, 17 2020', 'Employee Schedule Report'),
+(5, 5, '', 'Organizational Profile'),
+(6, 6, 'Nov, 17 2020', 'User Accounts Report'),
+(7, 7, 'Nov, 10 2020', 'Employee Birthdays');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `themes`
+--
+
+CREATE TABLE `themes` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `theme` varchar(255) NOT NULL DEFAULT 'black',
+  `timestamps` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `themes`
+--
+
+INSERT INTO `themes` (`id`, `user_id`, `theme`, `timestamps`) VALUES
+(3, 1, 'white', '2021-01-05 09:06:13'),
+(4, 17, 'black', '2020-11-17 06:41:42'),
+(5, 22, 'white', '2020-12-31 06:46:40'),
+(6, 20, 'white', '2020-12-31 10:31:24'),
+(7, 25, 'white', '2021-01-05 09:36:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userprojects`
+--
+
+CREATE TABLE `userprojects` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `userprojects`
+--
+
+INSERT INTO `userprojects` (`id`, `user_id`, `project_id`, `created_at`, `updated_at`) VALUES
+(1, 4, 6, NULL, NULL),
+(2, 1, 6, NULL, NULL),
+(3, 5, 6, NULL, NULL),
+(4, 3, 6, NULL, NULL),
+(34, 4, 15, NULL, NULL),
+(35, 1, 15, NULL, NULL),
+(36, 5, 1, NULL, NULL),
+(37, 5, 1, NULL, NULL),
+(38, 5, 1, NULL, NULL),
+(39, 3, 17, NULL, NULL),
+(40, 5, 17, NULL, NULL),
+(41, 3, 18, NULL, NULL),
+(42, 1, 18, NULL, NULL),
+(43, 5, 18, NULL, NULL),
+(44, 4, 19, NULL, NULL),
+(45, 3, 19, NULL, NULL),
+(46, 11, 19, NULL, NULL),
+(47, 5, 20, NULL, NULL),
+(48, 16, 20, NULL, NULL),
+(49, 4, 20, NULL, NULL),
+(50, 2, 20, NULL, NULL),
+(51, 3, 21, NULL, NULL),
+(52, 2, 21, NULL, NULL),
+(53, 10, 21, NULL, NULL),
+(54, 5, 22, NULL, NULL),
+(55, 2, 22, NULL, NULL),
+(56, 1, 22, NULL, NULL),
+(57, 3, 23, NULL, NULL),
+(58, 5, 23, NULL, NULL),
+(59, 4, 23, NULL, NULL),
+(60, 3, 24, NULL, NULL),
+(61, 4, 24, NULL, NULL),
+(62, 15, 24, NULL, NULL),
+(63, 1, 24, NULL, NULL),
+(64, 2, 25, NULL, NULL),
+(65, 3, 25, NULL, NULL),
+(66, 5, 25, NULL, NULL),
+(67, 5, 1, NULL, NULL),
+(68, 8, 1, NULL, NULL),
+(69, 2, 1, NULL, NULL),
+(70, 2, 1, NULL, NULL),
+(71, 3, 1, NULL, NULL),
+(72, 5, 1, NULL, NULL),
+(73, 16, 1, NULL, NULL),
+(74, 2, 1, NULL, NULL),
+(75, 3, 1, NULL, NULL),
+(76, 5, 1, NULL, NULL),
+(77, 15, 1, NULL, NULL),
+(78, 3, 1, NULL, NULL),
+(79, 4, 1, NULL, NULL),
+(80, 15, 1, NULL, NULL),
+(81, 1, 1, NULL, NULL),
+(82, 5, 1, NULL, NULL),
+(83, 16, 1, NULL, NULL),
+(84, 5, 1, NULL, NULL),
+(85, 8, 1, NULL, NULL),
+(86, 2, 1, NULL, NULL),
+(87, 4, 1, NULL, NULL),
+(88, 5, 1, NULL, NULL),
+(89, 8, 1, NULL, NULL),
+(90, 2, 1, NULL, NULL),
+(91, 4, 1, NULL, NULL),
+(92, 5, 1, NULL, NULL),
+(93, 8, 1, NULL, NULL),
+(94, 2, 1, NULL, NULL),
+(95, 4, 1, NULL, NULL),
+(96, 5, 1, NULL, NULL),
+(97, 8, 1, NULL, NULL),
+(98, 2, 1, NULL, NULL),
+(99, 4, 1, NULL, NULL),
+(100, 4, 25, NULL, NULL),
+(101, 16, 25, NULL, NULL),
+(102, 2, 23, NULL, NULL),
+(103, 15, 23, NULL, NULL),
+(104, 1, 23, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `reference` int(11) DEFAULT NULL,
+  `idno` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `role_id` int(11) DEFAULT NULL,
+  `acc_type` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `reference`, `idno`, `name`, `email`, `role_id`, `acc_type`, `status`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 1, '001122', 'DEMO, MANAGER', 'manager@example.com', 1, 2, 1, '$2y$10$mDAH.R8JG5ThPelt4zRXc.8sxizt.tqXQfndx5s/W/3j0Sq6xS3LG', 'icigsc59r3FVWSeO9Y12nLFTrY8Gt4YQaLDN64S9xLb2cHgJWV0ImCqgsWBW', '2018-10-31 12:10:04', '2018-10-31 12:10:04'),
+(2, 2, '001133', 'DEMO, EMPLOYEE', 'employee@example.com', 2, 1, 1, '$2y$10$3qjhKES39RmTl4k7PQWJ.OfG4uFzzF/iYJI8A1BLgYs2uDEfe5pry', '', '2018-12-21 05:20:18', '2018-12-21 05:20:18'),
+(3, 5, '1122', 'SAYEED, SAADMAN', '786saadman@gmail.com', 1, 2, 1, '$2y$10$p6ECdxmxENR2P7p1HZS3Cevv5A1jE/c2s3uk37nkVc66tTtXMMmqq', NULL, '2020-11-10 07:44:13', '2020-11-10 07:44:13'),
+(6, NULL, NULL, 'b', 'b@b.com', 2, 1, 0, '$2y$10$886/1yatAyM5R89PNtMxDeaqmCLgIzUQPvasZ9TmSMAr1rInk5xtG', NULL, '2020-11-15 06:47:59', '2020-11-15 06:47:59'),
+(7, NULL, NULL, 'c', 'c@c.com', 2, 1, 0, '$2y$10$UOxokkfm1s1e4oGsPqt/OOcWLpb8PSntmDdLJaC9u1sdT7UX4gWu2', NULL, '2020-11-15 06:49:22', '2020-11-15 06:49:22'),
+(8, NULL, NULL, 'd', 'd@d.com', 2, 1, 0, '$2y$10$ARzhp7x9qIDtwU.dx.keiuX4VSSlCxHWdA6jHmFCz8FwBjms5vsJW', NULL, '2020-11-15 06:50:40', '2020-11-15 06:50:40'),
+(9, NULL, NULL, 'e', 'e@e.com', 2, 1, 0, '$2y$10$l.6yIYqBI./RvhQYhH0d8uvFjyg.q6AruGf8VI2LeXF9aJaPo1a3O', NULL, '2020-11-15 06:54:41', '2020-11-15 06:54:41'),
+(10, NULL, NULL, 'f', 'f@f.com', 2, 1, 0, '$2y$10$m0WWvICdAVR.chMvexMuyOD8b7Fj1mpGkOfeJwX1/iDaGyHrfZnge', NULL, '2020-11-15 06:55:25', '2020-11-15 06:55:25'),
+(11, NULL, NULL, 'g', 'g@g.com', 2, 1, 0, '$2y$10$4Y5Fz66FR0NHoO26IaEpu.LqV4b8tw4gXc0yK6K53YnwiornHrv2S', NULL, '2020-11-15 06:56:19', '2020-11-15 06:56:19'),
+(12, NULL, NULL, 'aa', 'aa@a.com', 2, 1, 0, '$2y$10$PgNt83tOS6w9mmShPym8Gun5WfGzxezD1ckMpDnOZGxAwxyzrfwIe', NULL, '2020-11-15 06:59:01', '2020-11-15 06:59:01'),
+(13, NULL, NULL, 'bb', 'bb@b.com', 2, 1, 0, '$2y$10$JcTVHFP2y5xs0THxc0KtO.2Gho/SnHwjGJl8abq3wv2BqQ3GSGbqC', NULL, '2020-11-15 06:59:26', '2020-11-15 06:59:26'),
+(14, NULL, NULL, 'cc', 'cc@c.com', 2, 1, 0, '$2y$10$J3s6yNKjWAEP.cKr/DDiM.f36ZW4B/GFRQ4YFBDzN0uxYi1WLbe3C', NULL, '2020-11-15 07:01:24', '2020-11-15 07:01:24'),
+(15, 11, '10320', 'dd', 'dd@d.com', 2, 2, 1, '$2y$10$o2E6YVpnCEgv6D31odTkLebrysZ5tc0T/XHkSvtpGTSSOCp1mnAnm', NULL, '2020-11-15 07:04:05', '2020-11-15 07:04:05'),
+(16, 12, '10376', 'y', 'y@y.com', 1, 2, 1, '$2y$10$v6VEe06dnlyg3NAM7pR8KO701asTSJbVUyrQDu5sTfCRHgfkFY2rW', NULL, '2020-11-15 07:12:00', '2020-11-15 07:12:00'),
+(17, NULL, NULL, 'q', 'q@q.com', 2, 1, 1, '$2y$10$SpQnLTESKwnVhxQZlACEW.lywRWYl9vyMfN6hSh/ZSY2Z5SGLI2AW', NULL, '2020-11-17 06:26:14', '2020-11-17 06:26:14'),
+(18, NULL, NULL, 'client1', 'client1@gmail.com', 2, 3, 0, '$2y$10$5AypyKtg6g1UtcB.DuJOtOYVyGc1xDcZJdkSSVNmKpoy2vi2NpqJm', NULL, '2020-12-31 05:59:42', '2020-12-31 05:59:42'),
+(19, NULL, NULL, 'client2', 'client2@gmail.com', 3, 3, 1, '$2y$10$iaWciptTE.iaETQbX7kVxup.W7.lV7whRqHmcfwXEvwazYlur.rHW', NULL, '2020-12-31 06:02:10', '2020-12-31 06:02:10'),
+(20, NULL, NULL, 'client3 c', 'client3@gmail.com', 3, 3, 1, '$2y$10$IJkRe50bA1M5Eg0TivN6Lum6hRMbyuGCrc0UNh7CYi4f0CEPyuDiy', NULL, '2020-12-31 06:03:25', '2020-12-31 06:03:25'),
+(22, NULL, NULL, 'client5', 'client5@gmail.com', 3, 3, 1, '$2y$10$H.c9a/G6/VHyD1Kl4uk/i.YYBOTe1tmed7EdIBlUUYtNc04wesg1q', NULL, '2020-12-31 06:12:00', '2020-12-31 06:12:00'),
+(23, NULL, NULL, 'client6', 'client6@gmail.com', 3, 3, 1, '$2y$10$0nOdk3qaH6IOlVGG.O.RD.EL19JNKf54z0KYbjL.3G.5/lTa6NSb.', NULL, '2020-12-31 06:19:47', '2020-12-31 06:19:47'),
+(24, NULL, NULL, 'emp', 'emp@gmail.com', 2, 1, 0, '$2y$10$yVfQ5lvt0l.cFAnh8wEX1.nxYJAyRAeGvQwNHQMwKtRJOWpFm5BEe', NULL, '2020-12-31 07:32:56', '2020-12-31 07:32:56'),
+(25, NULL, NULL, 'emp1', 'emp1@gmail.com', 2, 1, 1, '$2y$10$rwqQECnkI3LqBJIoKAp9jO1Vn/X4ieq07JteBI39MwGHYebSbQ71C', NULL, '2021-01-05 09:10:50', '2021-01-05 09:10:50'),
+(26, 16, '575816', 'emp2', 'emp2@gmail.com', 3, 3, 1, '$2y$10$qG6z8CtV.UOgVgL1r2aW.etNfZADTyFqzcJ5f24IRhKHlSC/RQC7G', NULL, '2021-01-05 09:50:02', '2021-01-05 09:50:02'),
+(27, 17, '247117', 'emp3', 'emp3@gmail.com', 3, 3, 1, '$2y$10$sgcdq791AT3v4FKvE3X93um6nTOJ86MOZe.pdmnNczJgeTEC8shlK', NULL, '2021-01-05 09:51:57', '2021-01-05 09:51:57'),
+(28, 18, '498418', 'emp4', 'emp4@gmail.com', 2, 1, 1, '$2y$10$VtSI5qg/3FtN1Nl/fSRmOOfNeKUxmX1YjJjVwUKNe4fmQ/NzqmmPq', NULL, '2021-01-05 09:54:48', '2021-01-05 09:54:48'),
+(29, 19, '487219', 'emp5', 'emp5@gmail.com', 2, 1, 1, '$2y$10$alPlGxpnEHwsSRufBG95Ueb2njRdfVjSwy309fHXDdCvUHiDGB56m', NULL, '2021-01-05 10:07:18', '2021-01-05 10:07:18'),
+(30, NULL, NULL, 'emp6', 'emp6@gmail.com', 3, 3, 1, '$2y$10$nR2PTva5mjss9nMlKgnu4OTQ/03c0C7gn7DWZj72Dl2dFkVVfhVdK', NULL, '2021-01-05 11:49:41', '2021-01-05 11:49:41'),
+(31, 20, '524120', 'emp7', 'emp7@gmail.com', 2, 1, 1, '$2y$10$QdjVgfU1JN53D1ggyBBkrOHNLlehnnIrHvKyEmy7k7aW.TelnB13y', NULL, '2021-01-05 11:50:01', '2021-01-05 11:50:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_permissions`
+--
+
+CREATE TABLE `users_permissions` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `perm_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users_permissions`
+--
+
+INSERT INTO `users_permissions` (`id`, `role_id`, `perm_id`) VALUES
+(1798, 1, 1),
+(1799, 1, 2),
+(1800, 1, 22),
+(1801, 1, 21),
+(1802, 1, 23),
+(1803, 1, 24),
+(1804, 1, 25),
+(1805, 1, 3),
+(1806, 1, 31),
+(1807, 1, 32),
+(1808, 1, 4),
+(1809, 1, 41),
+(1810, 1, 42),
+(1811, 1, 43),
+(1812, 1, 44),
+(1813, 1, 5),
+(1814, 1, 52),
+(1815, 1, 53),
+(1816, 1, 9),
+(1817, 1, 91),
+(1818, 1, 7),
+(1819, 1, 8),
+(1820, 1, 81),
+(1821, 1, 82),
+(1822, 1, 83),
+(1823, 1, 10),
+(1824, 1, 101),
+(1825, 1, 102),
+(1826, 1, 103),
+(1827, 1, 104),
+(1828, 1, 11),
+(1829, 1, 111),
+(1830, 1, 112),
+(1831, 1, 12),
+(1832, 1, 121),
+(1833, 1, 122),
+(1834, 1, 13),
+(1835, 1, 131),
+(1836, 1, 132),
+(1837, 1, 14),
+(1838, 1, 141),
+(1839, 1, 142),
+(1840, 1, 15),
+(1841, 1, 151),
+(1842, 1, 152),
+(1843, 1, 153);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_roles`
+--
+
+CREATE TABLE `users_roles` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `role_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users_roles`
+--
+
+INSERT INTO `users_roles` (`id`, `role_name`, `state`) VALUES
+(1, 'MANAGER', 'Active'),
+(2, 'EMPLOYEE', 'Active'),
+(3, 'CLIENT', 'Active'),
+(6, 'MARKETER', 'Active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usertasks`
+--
+
+CREATE TABLE `usertasks` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `task_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `usertasks`
+--
+
+INSERT INTO `usertasks` (`id`, `user_id`, `project_id`, `created_at`, `updated_at`, `task_id`) VALUES
+(1, 5, 16, NULL, NULL, 5),
+(2, 8, 16, NULL, NULL, 5),
+(3, 2, 16, NULL, NULL, 5),
+(4, 5, 16, NULL, NULL, 6),
+(5, 8, 16, NULL, NULL, 6),
+(6, 8, 16, NULL, NULL, 7),
+(7, 2, 16, NULL, NULL, 7),
+(8, 2, 16, NULL, NULL, 8),
+(9, 8, 16, NULL, NULL, 9),
+(10, 8, 16, NULL, NULL, 10),
+(11, 8, 16, NULL, NULL, 11),
+(12, 2, 16, NULL, NULL, 11),
+(13, 8, 16, NULL, NULL, 12),
+(14, 2, 16, NULL, NULL, 12),
+(15, 5, 16, NULL, NULL, 13),
+(16, 8, 16, NULL, NULL, 13),
+(17, 8, 16, NULL, NULL, 14),
+(18, 2, 16, NULL, NULL, 14),
+(19, 8, 16, NULL, NULL, 16),
+(20, 2, 16, NULL, NULL, 16),
+(21, 8, 16, NULL, NULL, 17),
+(22, 2, 16, NULL, NULL, 17),
+(23, 5, 16, NULL, NULL, 19),
+(24, 8, 16, NULL, NULL, 19),
+(25, 2, 16, NULL, NULL, 19),
+(26, 1, 15, NULL, NULL, 20),
+(27, 4, 15, NULL, NULL, 21),
+(28, 1, 15, NULL, NULL, 21),
+(29, 4, 15, NULL, NULL, 22),
+(30, 1, 15, NULL, NULL, 23),
+(31, 4, 15, NULL, NULL, 24),
+(32, 1, 15, NULL, NULL, 24),
+(33, 4, 15, NULL, NULL, 25),
+(34, 1, 15, NULL, NULL, 25),
+(35, 4, 15, NULL, NULL, 27),
+(36, 4, 15, NULL, NULL, 28);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userworkspaces`
+--
+
+CREATE TABLE `userworkspaces` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `workspace_id` int(11) NOT NULL,
+  `permission` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `userworkspaces`
+--
+
+INSERT INTO `userworkspaces` (`id`, `user_id`, `workspace_id`, `permission`, `created_at`, `updated_at`) VALUES
+(7, 1, 13, 'owner', NULL, NULL),
+(8, 1, 14, 'owner', NULL, NULL),
+(9, 1, 15, 'owner', NULL, NULL),
+(10, 1, 16, 'owner', NULL, NULL),
+(11, 1, 17, 'owner', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workspace`
+--
+
+CREATE TABLE `workspace` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `workspace_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `lang` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `workspace`
+--
+
+INSERT INTO `workspace` (`id`, `workspace_name`, `slug`, `created_by`, `lang`, `created_at`, `updated_at`) VALUES
+(13, 'test323', 'test323', 1, 'en', '2020-12-08 19:34:26', NULL),
+(14, 'tes33', 'tes33', 1, 'en', '2020-12-08 19:56:33', NULL),
+(15, 'vu', 'vu', 1, 'en', '2020-12-09 19:08:11', NULL),
+(16, 'saad', 'saad', 1, 'en', '2020-12-09 19:19:36', '2020-12-22 08:29:28'),
+(17, 'test', 'test', 1, 'en', '2020-12-24 15:22:59', NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `client`
+--
+ALTER TABLE `client`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `client_contacts`
+--
+ALTER TABLE `client_contacts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `expense`
+--
+ALTER TABLE `expense`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `expense_category`
+--
+ALTER TABLE `expense_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oauth_access_tokens`
+--
+ALTER TABLE `oauth_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_auth_codes`
+--
+ALTER TABLE `oauth_auth_codes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_auth_codes_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_clients_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oauth_refresh_tokens`
+--
+ALTER TABLE `oauth_refresh_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payroll`
+--
+ALTER TABLE `payroll`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `registered_client_projects`
+--
+ALTER TABLE `registered_client_projects`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_company_data`
+--
+ALTER TABLE `tbl_company_data`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_form_company`
+--
+ALTER TABLE `tbl_form_company`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_form_department`
+--
+ALTER TABLE `tbl_form_department`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_form_jobtitle`
+--
+ALTER TABLE `tbl_form_jobtitle`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_form_leavegroup`
+--
+ALTER TABLE `tbl_form_leavegroup`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_form_leavetype`
+--
+ALTER TABLE `tbl_form_leavetype`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_people`
+--
+ALTER TABLE `tbl_people`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_people_attendance`
+--
+ALTER TABLE `tbl_people_attendance`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_people_leaves`
+--
+ALTER TABLE `tbl_people_leaves`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_people_schedules`
+--
+ALTER TABLE `tbl_people_schedules`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_report_views`
+--
+ALTER TABLE `tbl_report_views`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `themes`
+--
+ALTER TABLE `themes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `userprojects`
+--
+ALTER TABLE `userprojects`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users_permissions`
+--
+ALTER TABLE `users_permissions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users_roles`
+--
+ALTER TABLE `users_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `usertasks`
+--
+ALTER TABLE `usertasks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `userworkspaces`
+--
+ALTER TABLE `userworkspaces`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `workspace`
+--
+ALTER TABLE `workspace`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `client`
+--
+ALTER TABLE `client`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `client_contacts`
+--
+ALTER TABLE `client_contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `expense`
+--
+ALTER TABLE `expense`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `expense_category`
+--
+ALTER TABLE `expense_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payroll`
+--
+ALTER TABLE `payroll`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `registered_client_projects`
+--
+ALTER TABLE `registered_client_projects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT for table `tbl_company_data`
+--
+ALTER TABLE `tbl_company_data`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `tbl_form_company`
+--
+ALTER TABLE `tbl_form_company`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tbl_form_department`
+--
+ALTER TABLE `tbl_form_department`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tbl_form_jobtitle`
+--
+ALTER TABLE `tbl_form_jobtitle`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `tbl_form_leavegroup`
+--
+ALTER TABLE `tbl_form_leavegroup`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_form_leavetype`
+--
+ALTER TABLE `tbl_form_leavetype`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tbl_people`
+--
+ALTER TABLE `tbl_people`
+  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `tbl_people_attendance`
+--
+ALTER TABLE `tbl_people_attendance`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `tbl_people_leaves`
+--
+ALTER TABLE `tbl_people_leaves`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_people_schedules`
+--
+ALTER TABLE `tbl_people_schedules`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tbl_report_views`
+--
+ALTER TABLE `tbl_report_views`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `themes`
+--
+ALTER TABLE `themes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

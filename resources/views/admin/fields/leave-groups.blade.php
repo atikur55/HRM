@@ -10,10 +10,13 @@
 
     <div class="container-fluid">
         <div class="row">
-            <h2 class="page-title">{{ __("Leave Groups") }}
-                <button class="btn btn-success ui positive mini button offsettop5 btn-add float-right"><i class="ui icon plus"></i>{{ __("Add") }}</button>
-                <a href="{{ url('fields/leavetype/') }}" class="btn btn-warning ui basic mini button offsettop5 float-right"><i class="icon angle left"></i>{{ __("Return") }}</a>
-            </h2>
+            <div class="col-md-12">
+                <h2 class="page-title">{{ __("Leave Groups") }}
+                    <button class="btn btn-success ui positive mini button offsettop5 btn-add float-right ml-3"><i class="ui icon plus"></i>{{ __("Add") }}</button>
+                    <a href="{{ url('fields/leavetype/') }}" class="btn btn-warning ui basic mini button offsettop5 float-right"><i class="icon angle left"></i>{{ __("Return") }}</a>
+                </h2>
+            </div>  
+        
         </div>
 
         <div class="row">
@@ -30,7 +33,7 @@
             @endif
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
             <div class="box box-success">
                 <div class="box-body">
                     <table width="100%" class="table table-striped table-hover" id="dataTables-example">

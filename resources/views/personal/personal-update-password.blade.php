@@ -30,19 +30,19 @@
                     @endif
                     <form id="edit_personal_password_form" action="{{ url('personal/update/password') }}" class="ui form" method="post" accept-charset="utf-8">
                         @csrf
-                        <div class="field">
+                        <div class="form-group">
                             <label>{{ __("Current Password") }}</label>
-                            <input type="password" name="currentpassword" value="" placeholder="Enter Current Password">
+                            <input type="password" name="currentpassword" value="" placeholder="Enter Current Password" class="form-control">
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <label for="">{{ __("New Password") }}</label>
-                            <input type="password" name="newpassword" value="" placeholder="Enter Password">
+                            <input type="password" name="newpassword" value="" placeholder="Enter Password" class="form-control"> 
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <label for="">{{ __("Confirm Password") }}</label>
-                            <input type="password" name="confirmpassword" value="" placeholder="Enter Password Confirmation">
+                            <input type="password" name="confirmpassword" value="" placeholder="Enter Password Confirmation" class="form-control">
                         </div>
-                        <div class="field">
+                        <div class="form-group">
                             <div class="ui error message">
                             <i class="close icon"></i>
                                 <div class="header"></div>
@@ -53,8 +53,8 @@
                         </div>
                         </div>
                         <div class="box-footer">
-                            <button class="ui positive small button" type="submit" name="submit"><i class="ui checkmark icon"></i> {{ __("Update") }}</button>
-                            <a class="ui grey small button" href="{{ url('personal/dashboard') }}"><i class="ui times icon"></i> {{ __("Cancel") }}</a>
+                            <button class="btn btn-success ui positive small button" type="submit" name="submit"><i class="ui checkmark icon"></i> {{ __("Update") }}</button>
+                            <a class="btn btn-danger ui grey small button" href="{{ url('personal/dashboard') }}"><i class="ui times icon"></i> {{ __("Cancel") }}</a>
                         </div>
                     </form>
                 </div>

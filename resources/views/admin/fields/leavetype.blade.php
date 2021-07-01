@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
             <div class="col-md-4">
                 <div class="box box-success">
                     <div class="box-body">

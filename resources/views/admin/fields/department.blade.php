@@ -1,5 +1,5 @@
 @extends('layouts.default')
-    
+
     @section('meta')
         <title>Departments | Workday Time Clock</title>
         <meta name="description" content="Workday departments, view departments, and export or download departments.">
@@ -12,13 +12,13 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 class="page-title uppercase">{{ __("Add Department") }}
-                <button class="btn btn-primary ui basic button mini offsettop5 btn-import float-right"><i class="ui icon upload"></i> {{ __("Import") }}</button>
+                <!-- <button class="btn btn-primary ui basic button mini offsettop5 btn-import float-right ml-3"><i class="ui icon upload"></i> {{ __("Import") }}</button> -->
                 <a href="{{ url('export/fields/department' )}}" class="btn btn-success ui basic button mini offsettop5 btm-export float-right"><i class="ui icon download"></i> {{ __("Export") }}</a>
                 </h2>
-            </div>    
+            </div>
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
             <div class="col-md-4">
                 <div class="box box-success">
                     <div class="box-body">
@@ -103,4 +103,3 @@
     </script>
 
     @endsection
-

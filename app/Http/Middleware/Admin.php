@@ -23,9 +23,10 @@ class Admin
     {
         $t = \Auth::user()->acc_type;
         
-        if ($t == 2) {
+        if ($t == 2 || $t == 3) {
             // nothing
-        } else {
+        }
+         else {
             Auth::logout();
             return redirect()->route('denied');
         }

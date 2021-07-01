@@ -13,15 +13,16 @@
     
     <div class="container-fluid">
         <div class="row">
-            <h2 class="page-title">{{ __("Employee Leaves Report") }}
-                <a href="{{ url('reports') }}" class="ui basic blue button mini offsettop5 float-right"><i class="ui icon chevron left"></i>{{ __("Return") }}</a>
-            </h2>
-        </div>
+            
 
-        <div class="row">
-            <div class="box box-success">
+        <div class="col-md-8">
+            <h2 class="page-title">{{ __("Employee Leaves Report") }}
+                <a href="{{ url('reports') }}" class="btn btn-danger ui basic blue button mini offsettop5 float-right"><i class="ui icon chevron left"></i>{{ __("Return") }}</a>
+            </h2>
+    
+            <div class="box box-success widget-content widget-content-area br-6"> 
                 <div class="box-body reportstable">
-                    <form action="{{ url('export/report/leaves') }}" method="post" accept-charset="utf-8" class="ui small form form-filter" id="filterform">
+                    {{-- <form action="{{ url('export/report/leaves') }}" method="post" accept-charset="utf-8" class="ui small form form-filter" id="filterform">
                         @csrf
                         <div class="inline three fields">
                             <div class="form-group">
@@ -48,7 +49,8 @@
                             <button id="btnfilter" class="btn btn-primary ui icon button positive small inline-button"><i class="ui icon filter alternate"></i> {{ __("Filter") }}</button>
                             <button type="submit" name="submit" class=" btn btn-primary ui icon button blue small inline-button"><i class="ui icon download"></i> {{ __("Download") }}</button>
                         </div>
-                    </form>
+                        <br>
+                    </form> --}}
                     
                     <table width="100%" class="table table-striped table-hover" id="dataTables-example" data-order='[[ 0, "asc" ]]'>
                         <thead>

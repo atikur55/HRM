@@ -14,6 +14,8 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Auth;
+use App\User;
 
 class EmployeesController extends Controller
 {
@@ -48,9 +50,12 @@ class EmployeesController extends Controller
 		->where('employmentstatus', 'Archive')
 		->count();
 
-		$data = table::people()
-		->join('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')
-		->get();
+		// $data = table::people()
+		// ->leftjoin('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')
+		// ->get();
+
+
+		
 
 		$emp_file = table::people()->count();
 		
@@ -60,6 +65,40 @@ class EmployeesController extends Controller
 		} else {
 			$number1 = null;
 		}
+
+		// Atik
+		// $user = Auth::id();
+		// $user_role = User::where('id',$user)->first();
+		// if ($user_role->acc_type == 2) 
+		// {
+		// 	$employees = table::people()->orderBy('id','desc')->get();
+
+		// } 
+		// else 
+		// {
+		// 	$employees = table::people()->where('user_id',$user)->orderBy('id','desc')->get();
+		// }
+
+		$user = Auth::id();
+		$user_role = User::where('id',$user)->first();
+		if ($user_role->acc_type == 2) 
+		{
+			$data = table::people()
+				->leftjoin('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')
+				->get();
+			// $data = table::people()->orderBy('id','desc')->get();
+
+		} 
+		else 
+		{
+			$data = table::people()
+				->where('user_id',$user)
+				->leftjoin('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')
+				->get();
+			// dump($data);die();
+			// $data = table::people()->where('user_id',$user)->orderBy('id','desc')->get();
+		}
+		// End Atik
 		
 	    return view('admin.employees', compact('data', 'emp_typeR', 'emp_typeT', 'emp_genderM', 'emp_genderR', 'emp_allActive', 'emp_file', 'emp_allArchive'));
 	}
@@ -79,11 +118,11 @@ class EmployeesController extends Controller
 	
     public function add(Request $request)
     {
+  
 		if (permission::permitted('employees-add')=='fail'){ return redirect()->route('denied'); }
-		
 		$v = $request->validate([
-			'lastname' => 'required|alpha_dash_space|max:155',
-			'firstname' => 'required|alpha_dash_space|max:155',
+			// 'lastname' => 'required|alpha_dash_space|max:155',
+			// 'firstname' => 'required|alpha_dash_space|max:155',
 			// 'mi' => 'required|alpha_dash_space|max:155',
 			// 'age' => 'required|digits_between:0,199|max:3',
 			// 'gender' => 'required|alpha|max:155',
@@ -103,11 +142,19 @@ class EmployeesController extends Controller
 			// 'leaveprivilege' => 'required|max:155',
 			'idno' => 'required|max:155',
 			// 'employmenttype' => 'required|alpha_dash_space|max:155',
-			'employmentstatus' => 'required|alpha_dash_space|max:155',
+			// 'employmentstatus' => 'required|alpha_dash_space|max:155',
 			// 'startdate' => 'required|date|max:155',
 			// 'dateregularized' => 'required|date|max:155'
+			'father' => 'required',
+			'mother' => 'required'
 		]);
-	  
+		/*new added */
+
+		$father = $request->father;
+		$mother = $request->mother;
+		$emergency_contact = $request->emergency_contact_name.'_'.$request->emergency_contact_relation.'_'.$request->emergency_number;
+
+		/* prev */
 		$lastname = mb_strtoupper($request->lastname);
 		$firstname = mb_strtoupper($request->firstname);
 		$mi = mb_strtoupper($request->mi);
@@ -132,12 +179,13 @@ class EmployeesController extends Controller
 		$employmentstatus = $request->employmentstatus;
 		$startdate = date("Y-m-d", strtotime($request->startdate));
 		$dateregularized = date("Y-m-d", strtotime($request->dateregularized));
+		$salary = $request->salary;
 
 		$is_idno_taken = table::companydata()->where('idno', $idno)->exists();
 
 		if ($is_idno_taken == 1) 
 		{
-			return redirect('employees-new')->with('error', trans("Whoops! the ID Number is already taken."));
+			return redirect('employees/new')->with('error', trans("Whoops! the ID Number is already taken."));
 		}
 
 		$file = $request->file('image');
@@ -150,9 +198,12 @@ class EmployeesController extends Controller
 		} else {
 			$name = '';
 		}
+
+	
 		
-    	table::people()->insert([
+    	$ins = table::people()->insert([
     		[
+    			'user_id' => Auth::id(),
 				'lastname' => $lastname,
 				'firstname' => $firstname,
 				'mi' => $mi,
@@ -170,25 +221,73 @@ class EmployeesController extends Controller
 				'employmenttype' => $employmenttype,
 				'employmentstatus' => $employmentstatus,
 				'avatar' => $name,
+				'salary'=>$salary,
+				'father'=>$father,
+				'mother'=>$mother,
+				'emergency_contact'=>$emergency_contact
             ],
-    	]);
-
-		$refId = DB::getPdo()->lastInsertId();
+		]);
 		
-    	table::companydata()->insert([
-    		[
-    			'reference' => $refId,
-				'company' => $company,
-				'department' => $department,
-				'jobposition' => $jobposition,
-				'companyemail' => $companyemail,
-				'leaveprivilege' => $leaveprivilege,
-				'idno' => $idno,
-				'startdate' => $startdate,
-				'dateregularized' => $dateregularized,
-            ],
-    	]);
+		if($ins){
 
-    	return redirect('employees')->with('success', trans("New employee has been added!"));
+			$refId = DB::getPdo()->lastInsertId();
+		
+			$cins = table::companydata()->insert([
+				[
+					'reference' => $refId,
+					'company' => $company,
+					'department' => $department,
+					'jobposition' => $jobposition,
+					'companyemail' => $companyemail,
+					'leaveprivilege' => $leaveprivilege,
+					'idno' => $idno,
+					'startdate' => $startdate,
+					'dateregularized' => $dateregularized,
+				],
+			]);
+			if($cins){
+
+						return redirect('employees')->with('success', trans("New employee has been added!"));
+					}else{
+						return redirect()->back()->with('error', trans("Failed"));
+					}
+
+					
+		}else{
+			return redirect()->back()->with('error', trans("Failed"));
+		}
+
+
+    }
+
+    // Atik
+
+    public function new_register_post(Request $request)
+    {
+    	$request->validate([
+    		'name' => 'required',
+    		'email' => 'required|email',
+    		'password' => 'required',
+    	]);
+    	$id_no = rand(10000,999999);
+    	User::insert([
+    		'user_id' => Auth::id(),
+    		'idno' => $id_no,
+    		'name' => $request->name,
+    		'email' => $request->email,
+    		'password' => Hash::make($request->password),
+    		'role_id' => 2,
+    		'acc_type' => 1,
+    		'status' => 1,
+    	]);
+    	$ref_id = table::people()->insertGetId([
+    		'user_id' => Auth::id(),
+    		'idno' => $id_no,
+    	]);
+    	table::companydata()->insert([
+    		'reference' => $ref_id,
+    		'idno' => $id_no,
+    	]);
+    	return back()->with('success','New Employee Add Successfully');
     }
 }

@@ -28,7 +28,7 @@
             <script src="{{ asset('/assets/vendor/html5shiv/html5shiv.min.js') }}></script>
             <script src="{{ asset('/assets/vendor/respond/respond.min.js') }}"></script>
         <![endif]-->
-
+        <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
         @yield('styles')
     </head>
     <body>

@@ -1,0 +1,387 @@
+/*
+* Workday - A time clock application for employees
+* Email: official.codefactor@gmail.com
+* Version: 1.1
+* Author: Brian Luna
+* Copyright 2020 Codefactor
+*/
+/* 
+body {
+    background-color: #E3F2FD;
+
+}
+
+body .wrapper {
+    min-height: 100vh;
+    position: relative;
+} */
+
+
+input[type="text"] {
+    width: 170px;
+    height: 34px;
+    padding-right: 50px;
+    border-radius:5px;
+    position:relative;
+    z-index:2;
+}
+
+input[type="submit"] {
+
+    margin-left: 1px 0 0 0px;
+    height: 25px;
+    width: 50px;
+    background: blue;
+    color: white;
+    border: 0;
+    -webkit-appearance: none;
+    
+    position:relative;
+    z-index:2;
+}
+.menu-row{
+    position:absolute;
+    z-index:0;
+    width:100%;
+    margin-top:-160px;
+ 
+}
+.clock-menu{
+ 
+    background:#0b105a;
+    padding-left:0;
+    margin-left:0;
+    padding-right:0;
+    margin-right:0;
+ 
+    /* border-radius:30px; */
+}
+.clock-menu:hover{
+    background:#2d3492;
+
+}
+.clock-text-align-right{
+    text-align:right;
+}
+.clock-text-align-left{
+    text-align:left
+}
+.clock-border-right{
+
+    border-right:2px solid #0e1726;
+   
+}
+.clock-menu-border{
+    /* border:1px dotted #222; */
+    padding:20px;
+    height:160px;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    
+}
+.clock-menu-border:hover{
+    /* border:1px dotted #222; */
+    padding:30px;
+    height:180px;
+    
+}
+.clock-menu-border-link{
+
+}
+.clock-menu-border-text{
+    font-size:15px;
+    color:white!important;
+}
+
+.clock-menu-border-icon{
+   
+   height:50px;
+    width:50px;
+    color:white!important;
+    padding:30px;
+
+}
+.color-1{
+    background-color:orange;padding:4px;border-radius:2px;
+}
+.color-2{
+    background-color:#0E875A;padding:4px;border-radius:2px;
+}
+.color-3{
+    background-color:#86124F;padding:4px;border-radius:2px;
+}
+.color-4{
+    background-color:#6823A2;padding:4px;border-radius:2px;
+}
+
+/* .clock-menu-border:hover{
+    border:1px solid #222;
+    border-radius:20px;
+    padding:2px;
+    background-color:#000;
+    text-align:center;
+    opacity: 0.8;
+} */
+
+.wrapper {
+    position: relative;
+    top: 0;
+    height: 100vh;
+}
+
+.fixedcenter {
+    text-align: center;
+    display: block;
+}
+
+.clockwrapper {
+    position: relative;
+  
+}
+
+.clockinout {
+    padding: 5px;
+    background: white;
+    border-radius: 7px;
+    display: inline-block;
+    margin-top: 5%;
+}
+
+.btnclock.active {
+    background: #03A9F4;
+    color: white;
+    outline: none;
+}
+
+.btnclock {
+    border: 0px;
+    padding: 6px 38px;
+    border-radius: 5px;
+    color: #9E9E9E;
+    font-size: 16px;
+    background: transparent;
+    outline: none;
+}
+
+.btnclock:hover,
+.btnclock:focus {
+    outline: none;
+}
+
+.timeclock {
+    
+    position:relative;
+    z-index:2;
+    margin-top: 30px;
+    width: 310px;
+    height: 310px;
+    border-radius: 50%;
+    margin-top: 30px;
+    width: 310px;
+    height: 310px;
+    border-radius: 50%;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgb(11 4 115) 0%, rgba(23,23,125,1) 20%, rgb(0 0 0) 100%);
+    display: inline-block;
+    border: 10px solid #B2EBF2;
+    display: inline-block;
+    border: 10px solid #B2EBF2
+}
+
+.timeclock span {
+    display: block;
+}
+
+.location{
+       margin-top: 10px;
+    color: #f4f4f4;
+    font-family: Helvetica Neue;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.clock-text {
+    margin-top: 10px;
+    color: #f4f4f4;
+    font-family: Helvetica Neue;
+    font-size: 30px;
+    font-weight: 200;
+    text-transform: uppercase;
+}
+
+.clock-time {
+    padding: 10px 0px;
+    font-size: 30px;
+    color: #fff;
+}
+
+span.clock-day {
+    color: white;
+    font-size: 15px;
+}
+
+.userinput {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+    z-index:2;
+}
+
+.userinput .col-md-2 {
+    width: 16.66666667%;
+    float: left;
+    z-index:2;
+}
+
+.userinput .col-md-7 {
+    width: 58.33333333%;
+    float: left;
+    z-index:2;
+}
+
+.userinput .col-md-3 {
+    width: 25%;
+    float: left;
+    z-index:2;
+}
+
+.userinput div {
+    padding: 0px;
+    z-index:2;
+}
+
+.userinput label {
+    line-height: 3em;
+    z-index:2;
+}
+
+.userinput button {
+    line-height: 1.9em;
+    margin-left: 5px;
+    z-index:2;
+}
+
+.form-control.border-input {
+    border-bottom: 1px solid #bcbcbc;
+    padding-left: 0px;
+    border-radius: 0px;
+    text-transform: capitalize;
+}
+
+.form-control,
+.border-input {
+    background: none;
+    font-size: 18px;
+    color: #373737;
+}
+
+.message-after {
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 12px 8px;
+    margin-top: 15px;
+    border-radius: 5px;
+    background: #ffffff;
+    border: 1px solid #B2EBF2;
+    box-shadow: 0px 2px 2px 0px #b2ebf2;
+    display: none;
+    font-size: 16px;
+    color:rgb(250, 246, 246)!important;
+    position:relative;
+    z-index:2
+}
+
+.uppercase {
+    text-transform: uppercase !important;
+}
+
+textarea.lightblue {
+    background-color: #B2EBF2 !important;
+    border: 1px solid #81D4FA !important;
+    color: #006064 !important;
+}
+
+textarea::placeholder {
+    color: #006064 !important;
+}
+
+.enter_idno {
+    border-color: #87c9ff !important;
+    font-size: 16px !important;
+}
+
+.enter_idno::placeholder {
+    color: #006064 !important
+}
+
+#btnclockin {
+    
+    position:relative;
+    z-index:2;
+    margin: 0px 0 0 -5px;
+    float: right!important;
+    background-color: blue;
+    /* margin-left: -50px; */
+    height: 33px;
+    line-height: 2px;
+}
+
+#clocktime {
+    color: #030114;
+}
+
+.ok {
+    background: #e6e6e5;
+    border: 1px solid #A5D6A7;
+    border-bottom: 3px solid #21ba45;
+    color: rgb(233, 219, 219) !important;
+}
+
+.notok {
+    border: 1px solid #FFCDD2; 
+     border-bottom: 3px solid #db2828;
+    background: #ecebec;
+    color:rgb(250, 250, 250) !important;
+    z-index:2
+}
+
+#fullname {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+img.wave {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    z-index: -10;
+}
+
+@media (max-width: 390px) {
+    .timeclock {
+        margin-top: 30px;
+        width: 280px;
+        height: 280px;
+    }
+
+    .clock-text {
+        margin-top: 70px;
+        font-size: 36px;
+    }
+
+    .clock-time {
+        padding: 30px 0px;
+        font-size: 42px;
+    }
+
+    span.clock-day {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 320px) {
+    .clockwrapper .userinput .inline.field>label.small {
+        display: none;
+    }
+}

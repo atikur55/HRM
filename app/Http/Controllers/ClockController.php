@@ -14,6 +14,7 @@ use App\Classes\permission;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class ClockController extends Controller
 {
@@ -83,7 +84,10 @@ class ClockController extends Controller
             }
         } 
 
-        $employee_id = table::companydata()->where('idno', $idno)->value('reference');
+        // $employee_id = table::companydata()->where('idno', $idno)->value('reference');
+        // Atik
+        $employee_id = table::companydata()->where('idno', $idno)->value('idno');
+        //End Atik
         
         if($employee_id == null) {
             return response()->json([
@@ -91,7 +95,10 @@ class ClockController extends Controller
             ]);
         }
 
-        $emp = table::people()->where('id', $employee_id)->first();
+        // $emp = table::people()->where('id', $employee_id)->first();
+        //Atik
+        $emp = table::people()->where('idno', $employee_id)->first();
+        // End Atik
         $lastname = $emp->lastname;
         $firstname = $emp->firstname;
         $mi = $emp->mi;
@@ -142,10 +149,12 @@ class ClockController extends Controller
 
                     if($clock_comment == "on" && $comment != NULL) 
                     {
+                        $reference_id = User::where('idno',$employee_id)->first();
                         table::attendance()->insert([
                             [
                                 'idno' => $idno,
-                                'reference' => $employee_id,
+                                // 'reference' => $employee_id,
+                                'reference' => $reference_id->user_id,
                                 'date' => $date,
                                 'employee' => $employee,
                                 'timein' => $date." ".$time,
@@ -154,10 +163,12 @@ class ClockController extends Controller
                             ],
                         ]);
                     } else {
+                        $reference_id = User::where('idno',$employee_id)->first();
                         table::attendance()->insert([
                             [
                                 'idno' => $idno,
-                                'reference' => $employee_id,
+                                // 'reference' => $employee_id,
+                                'reference' => $reference_id->user_id,
                                 'date' => $date,
                                 'employee' => $employee,
                                 'timein' => $date." ".$time,

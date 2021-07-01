@@ -21,32 +21,59 @@ class PersonalLeavesController extends Controller
     {
         $i = \Auth::user()->idno;
         $ref = \Auth::user()->reference;
+      
 
         $l = table::leaves()->where('idno', $i)->get();
         $lp = table::companydata()->where('reference', $ref)->value('leaveprivilege');
         $r = table::leavegroup()->where('id', $lp)->value('leaveprivileges');
         $rights = explode(",", $r);
-        
         $lt = table::leavetypes()->get();
         $lg = table::leavegroup()->get();
+
+        // echo $ref;
+        // echo '<br>';
+        // echo $i;
+        // echo '<br>';
+
+        // echo '<pre>';
+        // print_r($l);
+        // echo '</pre>';
+        // echo '<br>';
+
+        // echo '<pre>';
+        // print_r($lp);
+        // echo '</pre>';
+
+        // echo '<br>';
+        // die();
         
-        return view('personal.personal-leaves-view', compact('l', 'lt', 'lg', 'lp', 'rights'));
+        return view('personal.personal-leaves-view', compact('l','lt','lg','lp','rights'));
     }
 
     public function requestL(Request $request) 
     {
 
+       
+
         $v = $request->validate([
             'type' => 'required|max:100',
-            'typeid' => 'required|digits_between:0,999|max:100',
+            // 'typeid' => 'required|digits_between:0,999|max:100',
             'leavefrom' => 'required|date|max:15',
             'leaveto' => 'required|date|max:15',
             'returndate' => 'required|date|max:15',
             'reason' => 'required|max:255',
         ]);
 
-        $typeid = $request->typeid;
-        $type = mb_strtoupper($request->type);
+
+        $t = explode(',',$request->type);
+
+        $typeid = $t[1];
+        $type = $t[0];
+
+        // echo $type.' '.$typeid;die();
+
+        // $typeid = $request->typeid;
+        // $type = mb_strtoupper($request->type);
         $reason = mb_strtoupper($request->reason);
         $leavefrom = date("Y-m-d", strtotime($request->leavefrom));
         $leaveto = date("Y-m-d", strtotime($request->leaveto));
@@ -54,10 +81,11 @@ class PersonalLeavesController extends Controller
 
         $id = \Auth::user()->reference;
         $idno = \Auth::user()->idno;
-        $q = table::people()->where('id', $id)->select('firstname', 'mi', 'lastname')->first();
+        $q = table::people()->where('idno', $idno)->select('firstname', 'mi', 'lastname','user_id')->first();
+        // dd($q);die();
         
         table::leaves()->insert([
-            'reference' => $id,
+            'reference' => $q->user_id,
             'idno' => $idno,
             'employee' => $q->lastname.', '.$q->firstname,
             'type' => $type,
@@ -104,6 +132,19 @@ class PersonalLeavesController extends Controller
         $view->returndate = date('M d, Y', strtotime($view->returndate));
 
         return response()->json($view);
+    }
+
+    public function single(Request $request) 
+    {
+        $id = $request->id;
+        $view = table::leaves()->where('id', $id)->first();
+        $view->leavefrom = date('M d, Y', strtotime($view->leavefrom));
+        $view->leaveto = date('M d, Y', strtotime($view->leaveto));
+        $view->returndate = date('M d, Y', strtotime($view->returndate));
+
+        // dd($view);die();
+
+        return view('personal.single-view-leave',['d'=>$view]);
     }
 
     public function edit($id, Request $request) 

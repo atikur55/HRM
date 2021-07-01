@@ -151,6 +151,12 @@ var d_2options2 = {
         Revenue Monthly | Options
     =================================
 */
+console.log(exptotalarr);
+console.log(expyeararr);
+console.log('from dash 1 monthly_expense: ' );
+console.log(monthly_expense);
+
+
 var options1 = {
   chart: {
     fontFamily: 'Nunito, sans-serif',
@@ -210,7 +216,7 @@ var options1 = {
   },
   colors: ['#1b55e2', '#e7515a'],
   dataLabels: {
-      enabled: false
+      enabled: true
   },
   markers: {
     discrete: [{
@@ -256,15 +262,22 @@ var options1 = {
       curve: 'smooth',
       width: 2,
       lineCap: 'square'
-  },
-  series: [{
-      name: 'Income',
-      data: [16800, 16800, 15500, 17800, 15500, 17000, 19000, 16000, 15000, 17000, 14000, 17000]
-  }, {
+  }
+  ,
+  series: [
+    // {
+  //     name: 'Payroll',
+  //     // data: [exptotalarr[0], 16800, 15500, 17800, 15500, 17000, 19000, 16000, 15000, 17000, 14000, exptotalarr[1]]
+  //      data:exptotalarr
+  // }
+  // , 
+  {
       name: 'Expenses',
       data: [16500, 17500, 16200, 17300, 16000, 19500, 16000, 17000, 16000, 19000, 18000, 19000]
-  }],
+  }
+],
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  // labels: expyeararr,
   xaxis: {
     axisBorder: {
       show: false
@@ -442,8 +455,8 @@ var options = {
       width: 25,
       colors: '#0e1726'
     },
-    series: [985, 737, 270],
-    labels: ['Apparel', 'Electronic', 'Others'],
+    series: [is_online_now, is_offline_now],
+    labels: ['online', 'offline'],
     responsive: [{
         breakpoint: 1599,
         options: {

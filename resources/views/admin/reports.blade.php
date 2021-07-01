@@ -11,7 +11,7 @@
             <h2 class="page-title">{{ __('Reports') }}</h2>
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
             <div class="box box-success">
                 <div class="box-body">
                 <table width="100%" class="reports-table table table-striped table-hover" id="dataTables-example" data-order='[[ 0, "asc" ]]'>
@@ -70,7 +70,7 @@
                                 @endisset
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td><a href="{{ url('reports/organization-profile') }}"><i class="ui icon chart pie"></i> {{ __("Organizational Profile") }}</a></td>
                             <td class="odd">
                                 @isset($lastviews)
@@ -81,7 +81,7 @@
                                     @endforeach
                                 @endisset
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td><a href="{{ url('reports/employee-birthdays') }}"><i class="ui icon birthday cake"></i> {{ __('Employee Birthdays') }}</a></td>
                             <td class="odd">

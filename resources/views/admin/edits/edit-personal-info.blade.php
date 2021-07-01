@@ -44,10 +44,10 @@
                             <div class="two fields">
                                 
                                 {{-- CORK INPUT FIELD START --}}
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="exampleFormControlInput1">Full Name</label>
                                     <input type="text" class="form-control" id="exampleFormControlInput1" value="Alan Green">
-                                </div> 
+                                </div>  --}}
                                 {{-- CORK INPUT END --}}
 
 
@@ -102,6 +102,33 @@
                                 <label>{{ __('Mobile Number') }}</label>
                                 <input type="text" class="form-control" name="mobileno" value="@isset($person_details->mobileno){{ $person_details->mobileno }}@endisset">
                             </div>
+
+                            <div class="field">
+                                @isset($person_details->emergency_contact)
+                                @php
+                                  $exploded = array();
+                       
+                                 $exploded = explode('_',$person_details->emergency_contact);
+                                
+                                
+                                @endphp
+                                @endisset
+
+                                <label>{{ __('Emergency Contact') }}</label>
+                                <input type="text" name="emergency_contact_name" value="@isset($exploded[0]) {{$exploded[0]}} @endisset" placeholder="Contact Person Name" class="form-control">
+                                <br>
+                                <input type="text" name="emergency_contact_relation" value="@isset($exploded[1]) {{$exploded[1]}} @endisset" placeholder="Contact Person Relation" class="form-control">
+                                <br>
+                                <input type="text" class="form-control" name="emergency_number" value="@isset($exploded[2]) {{$exploded[2]}} @endisset" placeholder="Emergency Contact Number">
+                            </div>
+                            <div class="field">
+                                <label>{{ __('Parents Details') }}</label>
+                             
+                                <input type="text" name="father" value="{{$person_details->father}}" placeholder="Father Name" class="form-control" required>
+                                <br>
+                                <input type="text" class="form-control" name="mother" value="{{$person_details->mother}}" placeholder="Mother Name" required>
+                            </div>
+                            
                             </div>
                             <div class="two fields">
                                 <div class="form-group">
@@ -150,7 +177,7 @@
                                     <option value="">Select Company</option>
                                     @isset($company)
                                         @foreach ($company as $data)
-                                            <option value="{{ $data->company }}" @if($data->company == $company_details->company) selected @endif> {{ $data->company }}</option>
+                                            <option value="{{ $data->company??'' }}" @if($data->company??'' == $company_details->company??'') selected @endif> {{ $data->company }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -161,14 +188,14 @@
                                     <option value="">Select Department</option>
                                     @isset($department)
                                         @foreach ($department as $data)
-                                            <option value="{{ $data->department }}" @if($data->department == $company_details->department) selected @endif> {{ $data->department }}</option>
+                                            <option value="{{ $data->department??'' }}" @if($data->department??'' == $company_details->department??'') selected @endif> {{ $data->department }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>{{ __('Job Title / Position') }}</label>
-                                <div class="ui search dropdown selection form-control jobposition">
+                                <di v class="ui search dropdown selection form-control jobposition">
                                     <input type="hidden" name="jobposition" value="{{$company_details->jobposition}}">
                                     <i class="dropdown icon"></i>
                                     <div class="text">{{$company_details->jobposition}}</div>
@@ -186,10 +213,10 @@
                                     @endisset
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label>{{ __('ID Number') }}</label>
-                                <input type="text" class="form-control" name="idno" value="@isset($company_details->idno){{ $company_details->idno }}@endisset">
+                                <input type="text" class="form-control" name="idno" value="@isset($company_details->idno){{ $company_details->idno}}@endisset">
                             </div>
                             <div class="form-group">
                                 <label>{{ __('Email Address (Company)') }}</label>
@@ -232,6 +259,10 @@
                                 <input class="form-control"  type="text" name="dateregularized" value="@isset($company_details->dateregularized){{ $company_details->dateregularized }}@endisset" class="airdatepicker" placeholder="Date">
                             </div>
                             <br>
+                            <div class="form-group">
+                                <label>{{ __('Basic Salary') }}</label>
+                                <input class="form-control"  type="number" name="salary" value="@isset($person_details->salary){{$person_details->salary}}@endisset" placeholder="0.00">
+                            </div>
                         </div>
                     </div>
                 </div>

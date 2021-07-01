@@ -9,6 +9,9 @@
 body {
     background: #000;
     background-image:url("../images/img/clock-background.png");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; 
 }
 
 .vertical-align-wrap {
@@ -48,7 +51,7 @@ body {
     padding: 30px;
     vertical-align: middle;
     background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgb(11 4 115) 0%, rgba(23,23,125,1) 20%, rgb(0 0 0) 100%);
+    background: linear-gradient(90deg, rgb(11 4 115) 0%, rgb(23, 23, 125) 20%, rgb(49, 14, 100) 100%);
     /* border: 1px solid #000; */
     box-shadow: 0 0 10px #000;
 }

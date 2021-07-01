@@ -14,16 +14,31 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
+use App\User;
+use Auth;
 
 class LeavesController extends Controller
 {
     public function index() 
     {
         if (permission::permitted('leaves')=='fail'){ return redirect()->route('denied'); }
+        $user = User::where('id',Auth::id())->first();
 
-        $employee = table::people()->join('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')->get();
-        $leaves = table::leaves()->get();
-        $leave_types = table::leavetypes()->get();
+        if ($user->acc_type==2) 
+        {
+           $employee = table::people()->join('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')->get();
+            $leaves = table::leaves()->get();
+            $leave_types = table::leavetypes()->get(); 
+        } 
+        else 
+        {
+            $employee = table::people()->join('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')->get();
+            $leaves = table::leaves()->where('reference',$user->id)->get();
+            $leave_types = table::leavetypes()->get();
+        }
+        // $employee = table::people()->join('tbl_company_data', 'tbl_people.id', '=', 'tbl_company_data.reference')->get();
+        // $leaves = table::leaves()->get();
+        // $leave_types = table::leavetypes()->get();
 
         return view('admin.leaves', compact('employee', 'leaves', 'leave_types'));
     }

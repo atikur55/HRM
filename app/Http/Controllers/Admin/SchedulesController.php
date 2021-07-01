@@ -14,15 +14,25 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
+use App\User;
+use Auth;
 
 class SchedulesController extends Controller
 {
     public function index() 
     {
         if (permission::permitted('schedules')=='fail'){ return redirect()->route('denied'); }
-        
-        $employee = table::people()->get();
-        $schedules = table::schedules()->get();
+        $user = User::where('id',Auth::id())->first();
+        $employee = table::people()->where('user_id',Auth::id())->get();
+        // $schedules = table::schedules()->get();
+        if ($user->acc_type==2) 
+        {
+            $schedules = table::schedules()->get();
+        } 
+        else 
+        {
+            $schedules = table::schedules()->where('reference',$user->id)->get();
+        }
         $tf = table::settings()->value("time_format");
     
         return view('admin.schedules', compact('employee', 'schedules', 'tf'));
@@ -30,10 +40,11 @@ class SchedulesController extends Controller
 
     public function add(Request $request) 
     {
+     
         if (permission::permitted('schedules-add')=='fail'){ return redirect()->route('denied'); }
 
         $v = $request->validate([
-            'id' => 'required|max:20',
+            
             'employee' => 'required|max:100',
             'intime' => 'required|max:15',
             'outime' => 'required|max:15',
@@ -43,8 +54,15 @@ class SchedulesController extends Controller
             'restday' => 'required|max:155',
         ]);
 
-    	$id = $request->id;
-		$employee = mb_strtoupper($request->employee);
+        // $id = $request->id;
+        $employee  = explode(",",$request->employee);
+       
+        $id = $employee[2];
+        $employee = $employee[0].$employee[1]; 
+
+        $employee = mb_strtoupper($employee);
+        // print_r($employee); die();
+		
         $intime = date("h:i A", strtotime($request->intime)) ;
         $outime = date("h:i A", strtotime($request->outime)) ;
 		$datefrom = $request->datefrom;
@@ -60,9 +78,10 @@ class SchedulesController extends Controller
         }
 
         $emp_id = table::companydata()->where('reference', $id)->value('idno');
-    
+       
         table::schedules()->where('id', $id)->insert([
-        	'reference' => $id,
+        	// 'reference' => $id,
+            'reference' => Auth::id(),
         	'idno' => $emp_id,
         	'employee' => $employee,
         	'intime' => $intime,

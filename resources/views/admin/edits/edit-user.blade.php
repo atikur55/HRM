@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row widget-content widget-content-area br-6">
             <div class="col-md-12">
                 <div class="box box-success">
                     <div class="box-content">
@@ -31,33 +31,33 @@
                         @endif
                         <form id="edit_user_form" action="{{ url('users/update/user') }}" class="ui form add-user" method="post" accept-charset="utf-8">
                             @csrf
-                            <div class="field">
+                            <div class="form-group">
                                 <label>{{ __("Employee") }}</label>
-                                <input type="text" name="employee" value="@isset($u->name){{ $u->name }}@endisset" class="readonly uppercase" readonly>
+                                <input type="text" name="employee" value="@isset($u->name){{ $u->name }}@endisset" class="form-control readonly uppercase" readonly>
                             </div>
-                            <div class="field">
+                            <div class="form-group">
                                 <label>{{ __("Email") }}</label>
-                                <input type="text" name="email" value="@isset($u->email){{ $u->email }}@endisset" class="readonly lowercase" readonly>
+                                <input type="text" name="email" value="@isset($u->email){{ $u->email }}@endisset" class="form-control readonly lowercase" readonly>
                             </div>
-                            <div class="grouped fields opt-radio">
+                            <div class="grouped form-groups opt-radio">
                                 <label class="">{{ __("Choose Account type") }}</label>
-                                <div class="field">
+                                <div class="form-group">
                                     <div class="ui radio checkbox">
                                         <input type="radio" name="acc_type" value="1" @isset($u->acc_type) @if($u->acc_type == 1) checked @endif @endisset>
                                         <label>{{ __("Employee") }}</label>
                                     </div>
                                 </div>
-                                <div class="field" style="padding:0px!important">
+                                <div class="form-group" style="padding:0px!important">
                                     <div class="ui radio checkbox">
                                         <input type="radio" name="acc_type" value="2" @isset($u->acc_type) @if($u->acc_type == 2) checked @endif @endisset>
                                         <label>{{ __("Admin") }}</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="fields">
-                                <div class="sixteen wide field role">
+                            <div class="form-groups">
+                                <div class="sixteen wide form-group role">
                                     <label for="">{{ __("Role") }}</label>
-                                    <select class="ui dropdown uppercase" name="role_id">
+                                    <select class="form-control ui dropdown uppercase" name="role_id">
                                         <option value="">Select Role</option>
                                         @isset($r)
                                             @foreach ($r as $role)
@@ -67,25 +67,25 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="field">
+                            <div class="form-group">
                                 <label>{{ __("Status") }}</label>
-                                <select class="ui dropdown uppercase" name="status">
+                                <select class="form-control ui dropdown uppercase" name="status">
                                     <option value="">Select Status</option>
                                     <option value="1" @isset($u->status) @if($u->status == 1) selected @endif @endisset>Enabled</option>
                                     <option value="0" @isset($u->status) @if($u->status == 0) selected @endif @endisset>Disabled</option>
                                 </select>
                             </div>
-                            <div class="two fields">
-                                <div class="field">
+                            <div class="two form-groups">
+                                <div class="form-group">
                                     <label for="">{{ __("New Password") }}</label>
-                                    <input type="password" name="password" class="" placeholder="********">
+                                    <input type="password" name="password" class="form-control " placeholder="********">
                                 </div>
-                                <div class="field">
+                                <div class="form-group">
                                     <label for="">{{ __("Confirm New Password") }}</label>
-                                    <input type="password" name="password_confirmation" class="" placeholder="********">
+                                    <input type="password" name="password_confirmation" class="form-control " placeholder="********">
                                 </div>
                             </div>
-                            <div class="field">
+                            <div class="form-group">
                                 <div class="ui error message">
                                     <i class="close icon"></i>
                                     <div class="header"></div>
@@ -98,6 +98,7 @@
 
                     <div class="box-footer">
                         <input type="hidden" value="@isset($e_id){{ $e_id }}@endisset" name="ref">
+                          <input type="hidden" value="{{$u->id}}" name="uid">
                         <button class="btn btn-primary ui positive approve small button" type="submit" name="submit"><i class="ui checkmark icon"></i> {{ __("Update") }}</button>
                         <a href="{{ url('users') }}" class="btn btn-primary ui black grey small button"><i class="ui times icon"></i> {{ __("Cancel") }}</a>
                     </div>
